@@ -1,0 +1,5 @@
+inst_size_multi_island;type_multi_island;modified_multi_island;tw_shift_multi_island;cap_incr_multi_island;inst_size_multi_floor;type_multi_floor;modified_multi_floor;tw_shift_multi_floor;cap_incr_multi_floor
+big;1;100;100;70;big;1;100;100;70
+big;2;20;20;0;big;2;50;50;10
+small;1;40;40;2.5;small;1;92.5;92.5;2.5
+small;2;0;0;0;small;2;22.5;22.5;7.5
