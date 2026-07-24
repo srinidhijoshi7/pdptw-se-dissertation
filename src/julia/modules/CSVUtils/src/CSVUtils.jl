@@ -19,7 +19,6 @@ function fd_from_io(io::IO)
     return ccall(:fileno, Cint, (Ptr{Cvoid},), io)
 end
 
-# Function to write data to CSV with file locking
 function write_csv_with_flock(filename::String, data::DataFrame)
     # Ensure all directories in the path exist
     dir = dirname(filename)
@@ -27,24 +26,13 @@ function write_csv_with_flock(filename::String, data::DataFrame)
         mkpath(dir)
     end
 
+    # macOS + Julia 1.11 has a bug with flock on IOStreams that causes segfaults.
+    # Since we run single-threaded, we skip the locking entirely.
+    # See CSVUtils.jl.backup for the original.
     if !isfile(filename)
-        open(filename, "a") do io
-            fd = fd_from_io(io)  # Get file descriptor
-            flock(fd, 2)  # LOCK_EX (blocking lock)
-    
-            CSV.write(filename, data, delim = ";")
-            
-            flock(fd, 8)  # LOCK_UN (unlock)
-        end
+        CSV.write(filename, data, delim = ";")
     else
-        open(filename, "a") do io
-            fd = fd_from_io(io)  # Get file descriptor
-            flock(fd, 2)  # LOCK_EX (blocking lock)
-    
-            CSV.write(filename, data, append = true, writeheader = false, delim = ";")
-    
-            flock(fd, 8)  # LOCK_UN (unlock)
-        end
+        CSV.write(filename, data, append = true, writeheader = false, delim = ";")
     end
 end
 
