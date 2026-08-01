@@ -1,4 +1,10 @@
 .Rproj.user
 .Rhistory
 .RData
-.Ruserdata*.backup
+.Ruserdata
+*.backup
+
+# Python env files and secrets
+.env
+src/python/llm_loop/venv/
+src/python/llm_loop/__pycache__/
