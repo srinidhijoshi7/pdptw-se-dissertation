@@ -2,21 +2,20 @@
 
 You are designing a heuristic component for the **Pickup and Delivery Problem with Time Windows and Scheduling on the Edges (PDPTW-SE)**.
 
-Specifically, you must implement the **service order function** used inside a multi-start greedy insertion heuristic. This function decides the order in which pickup requests are processed by the greedy insertion phase. A good ordering leads to better initial solutions and, ultimately, lower-cost final solutions after local search.
+Specifically, you must implement the **service order function** used inside a multi-start greedy insertion heuristic. This function decides the order in which pickup requests are processed by the greedy insertion phase.
 
 ## Context
 
-- The problem: a fleet of vehicles serves pickup–delivery request pairs across multiple islands, subject to hard time windows and edge scheduling constraints (ferries between islands).
-- The heuristic: multi-start greedy insertion, repeated ~100 times with different orderings; the best solution across restarts is kept.
-- Your target: the ordering function. Two existing baselines are `random` (uniform random permutation) and `tightest_tw` (sort by tightness of time window `l_i − e_i`, tightest first). Empirically, `random` beats `tightest_tw` on this problem.
+- Baselines: `random` (uniform permutation) and `tightest_tw` (sort by TW width `l_i − e_i`, tightest first). Empirically `random` beats `tightest_tw`.
+- The multi-start heuristic runs ~100 restarts per instance and keeps the best solution.
 
 ## Current best candidate
 
-Below is the best `llm_candidate_score` function found so far, along with its fitness score.
+Below is the best `llm_candidate_score` function found so far.
 
-**Fitness metric:** mean of (candidate_cost / random_baseline_cost) across the evaluation instances. Lower is better. **1.0 means equivalent to random. Below 1.0 means it beats random.**
+**Fitness metric:** mean of (candidate_cost / random_baseline_cost) across the evaluation instances. Lower is better. **1.0 = equivalent to random. Below 1.0 = beats random.**
 
-Current best fitness: **{{BEST_FITNESS}}**
+Current champion fitness: **{{BEST_FITNESS}}**
 
 ```julia
 {{BEST_CODE}}
@@ -24,19 +23,16 @@ Current best fitness: **{{BEST_FITNESS}}**
 
 ## Your task
 
-Write a **new, different** `llm_candidate_score` function that you believe will achieve a **lower** fitness score than the one above.
+Write a **new, meaningfully different** `llm_candidate_score` function that you believe will achieve a **lower** fitness score than the champion above.
 
-Concrete ideas to consider (pick one or combine):
-- Change which features you consider (time windows, demand, positions, floor/island membership, delivery-side properties)
-- Change how features are combined (weighted sum, product, tiered/lexicographic ordering, clustering, greedy nearest-in-time)
-- Introduce or remove randomisation
-- Use `params.rng` more strategically (e.g. perturbation around a deterministic base ordering)
-
-Do **not** simply resubmit the same function with cosmetic changes. Aim for a genuinely different strategy.
+Guidance:
+- If the champion's fitness is close to 1.0, it is likely functioning as a random baseline in disguise. Your job is to **commit to a deterministic strategy**, not to re-invent randomness.
+- Consider using structural information: floor/island (`.point.z`) membership, spatial clusters, delivery deadlines, request pairing.
+- Consider non-linear combinations: lexicographic ordering, tiered scoring, greedy-nearest-neighbour construction, or a small deterministic base ordering perturbed by `params.rng`.
+- Do NOT resubmit the champion with cosmetic changes.
+- Avoid the champion's dominant pattern (do not just build a bigger weighted sum, or a bigger mode switch, if that's what it already does).
 
 ## The interface
-
-You must implement exactly this function in Julia:
 
 ```julia
 function llm_candidate_score(inst::InstanceData, params::ParameterData)::Vector{Int64}
@@ -44,34 +40,47 @@ function llm_candidate_score(inst::InstanceData, params::ParameterData)::Vector{
 end
 ```
 
-## Available data
+## Available data — EXACT field names
 
-Fields of `inst::InstanceData` you can use:
+**`inst::InstanceData`:**
+- `inst.n`                : `Int` — number of pickup requests
+- `inst.V_p`              : `Vector{Int}` — pickup node indices (length n)
+- `inst.V_d`              : `Vector{Int}` — delivery node indices, paired positionally with V_p
+- `inst.e[i]`             : `Float64` — earliest service time at node i
+- `inst.l[i]`             : `Float64` — latest service time at node i
+- `inst.q[i]`             : `Int` — demand at node i (positive for pickup, negative for delivery)
+- `inst.jobs[i]`          : a `Job` struct (see below)
 
-- `inst.n`                 : Int — number of pickup requests
-- `inst.V_p`               : Vector{Int} — pickup node indices (length n)
-- `inst.V_d`               : Vector{Int} — delivery node indices (length n), paired with V_p
-- `inst.e[i]`, `inst.l[i]` : Float64 — earliest / latest service time at node i
-- `inst.q[i]`              : Int — demand at node i (positive for pickup, negative for delivery)
-- `inst.jobs[i]`           : struct with fields including a `Point(x, y, floor)` position
+**`Job` struct fields:**
+- `.id::Int64`, `.point::Point`, `.dem::Int64`, `.earl::Int64`, `.lat::Int64`, `.servt::Int64`, `.pid::Int64`, `.did::Int64`
 
-Fields of `params::ParameterData` you can use:
+**CRITICAL — pairing:** `.pid` and `.did` are external Job IDs from the instance file, **NOT indices into `inst.jobs`**. To pair pickup `p = inst.V_p[k]` with its delivery **node index**, use `d = inst.V_d[k]`. Do NOT write `inst.jobs[job.did]` — that will crash with a BoundsError.
 
-- `params.rng`  : a `Random.MersenneTwister` you can use for reproducible randomness
+**`Point` struct fields:**
+- `.x::Int64`, `.y::Int64`, `.z::Int64` (z is island/floor — NOT called `.floor`)
+
+**`params::ParameterData`:**
+- `params.rng` — `Random.MersenneTwister` — use `rand(params.rng, ...)`
 
 ## Constraints
 
-- Return a `Vector{Int64}` — a permutation of the pickup indices in `inst.V_p`.
-- The returned vector must have length `inst.n`.
-- Every value must be a valid pickup node index (element of `inst.V_p`).
-- No duplicates.
-- Prefer deterministic logic seeded from `params.rng` over hardcoded randomness.
-- Do **not** define helper functions, macros, or types — the file will be `include`d into an existing module.
-- Do **not** import packages, use `Random` functions available in Base (`rand(params.rng, ...)`, `sortperm`, `shuffle`, etc.).
+- Return `Vector{Int64}` — a permutation of pickups in `inst.V_p`, length `inst.n`, no duplicates.
+- Do NOT define any function, macro, type, struct, or top-level `const` other than `llm_candidate_score` itself. Nested closures inside the main function are fine but usually unnecessary.
+- Do NOT `import`, `using`, or `include` anything.
+- Do NOT use `hasproperty`, `getfield`, or reflection. Use the field names listed above directly.
+- Use `params.rng` for any randomness.
+
+## Common failure modes to avoid
+
+1. Defining helper functions at file scope.
+2. Guessing field names with `hasproperty`.
+3. Falling back to `rand(params.rng)` as the dominant branch — that gives you the random baseline, not an improvement.
+4. Returning the wrong type (not `Vector{Int64}`) or the wrong indices (values not in `inst.V_p`).
+5. Modifying `inst.V_p` in place.
 
 ## Output format
 
-Return **only** the Julia code for `llm_candidate_score`, wrapped in a fenced code block:
+Return **only** the Julia code, wrapped in one fenced block:
 
 ```julia
 function llm_candidate_score(inst::InstanceData, params::ParameterData)::Vector{Int64}
@@ -79,4 +88,4 @@ function llm_candidate_score(inst::InstanceData, params::ParameterData)::Vector{
 end
 ```
 
-No prose, no explanation before or after the code block. Just the function.
+No prose before or after.

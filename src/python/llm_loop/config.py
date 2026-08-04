@@ -12,12 +12,12 @@ JULIA_DIR    = REPO_ROOT / "src" / "julia"              # where pdptwse.jl lives
 
 PROMPT_FILE       = LLM_LOOP_DIR / "prompts" / "seed.md"
 EVOLVE_PROMPT_FILE = LLM_LOOP_DIR / "prompts" / "evolve.md"
+DIVERSIFY_PROMPT_FILE = LLM_LOOP_DIR / "prompts" / "diversify.md"
 CANDIDATE_FILE    = LLM_LOOP_DIR / "candidates" / "current.jl"
 CANDIDATES_LOG    = LLM_LOOP_DIR / "logs" / "candidates.jsonl"
 GENERATIONS_LOG   = LLM_LOOP_DIR / "logs" / "generations.jsonl"
 BASELINES_FILE    = LLM_LOOP_DIR / "baselines.json"
 
-# ---------- Gemini ----------
 GEMINI_MODEL = "gemini-3.6-flash"
 
 # ---------- Instance grid ----------
@@ -54,4 +54,5 @@ JULIA_TIMEOUT      = 180     # kill Julia process if it hangs beyond this
 
 # ---------- Evolution ----------
 LAMBDA             = 3       # candidates generated per generation
-NUM_GENERATIONS    = 3       # for first real run
+NUM_GENERATIONS    = 5       # for first real run
+STAGNATION_THRESHOLD = 2     # generations without improvement -> use diversify prompt
