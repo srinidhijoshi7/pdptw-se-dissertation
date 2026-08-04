@@ -8,3 +8,5 @@
 .env
 src/python/llm_loop/venv/
 src/python/llm_loop/__pycache__/
+# LLM candidate files (generated, not source)
+src/python/llm_loop/candidates/*.jl

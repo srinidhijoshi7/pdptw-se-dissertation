@@ -25,6 +25,37 @@ function random_order_nodes(inst::InstanceData, params::ParameterData)::Vector{I
 	return order_nodes
 end # function random_order_nodes
 
+# Track which candidate file has been loaded to avoid re-include on every iteration
+const LLM_CANDIDATE_LOADED = Ref{String}("")
+
+"""
+	function llm_candidate_order(inst::InstanceData, params::ParameterData)::Vector{Int64}
+
+	Loads a Julia file containing an `llm_candidate_score` function from the path
+	given by the LLM_CANDIDATE_FILE environment variable, then calls that function.
+
+	The file is included exactly once per candidate per Julia process (cached by
+	file path). `Base.invokelatest` is used to sidestep Julia's world-age barrier
+	when calling a function defined in the same execution scope via `include`.
+
+	The included file must define exactly one function with the signature:
+	    llm_candidate_score(inst::InstanceData, params::ParameterData)::Vector{Int64}
+"""
+function llm_candidate_order(inst::InstanceData, params::ParameterData)::Vector{Int64}
+	candidate_file = get(ENV, "LLM_CANDIDATE_FILE", "")
+	if isempty(candidate_file)
+		error("LLM_CANDIDATE_FILE environment variable is not set")
+	end
+	if !isfile(candidate_file)
+		error("LLM candidate file not found: $candidate_file")
+	end
+	if LLM_CANDIDATE_LOADED[] != candidate_file
+		Base.include(@__MODULE__, candidate_file)
+		LLM_CANDIDATE_LOADED[] = candidate_file
+	end
+	return Base.invokelatest(llm_candidate_score, inst, params)
+end # function llm_candidate_order
+
 """
 	function init_vehicle_routes(inst::InstanceData)::Vector{Vector{VehicleStop}}
 
@@ -68,11 +99,12 @@ function get_service_order(inst::InstanceData, params::ParameterData)::Vector{In
 		return tightest_time_windows(inst)
 	elseif params.greedy_service_order == "random"
 		return random_order_nodes(inst, params)
+	elseif params.greedy_service_order == "llm_candidate"
+		return llm_candidate_order(inst, params)
 	end
 
 	error("Unknown greedy service order: $(params.greedy_service_order)")
 end # function get_service_order()
-
 """
 	function init_solution(inst::InstanceData)::Solution
 
