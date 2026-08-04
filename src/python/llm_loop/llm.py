@@ -58,3 +58,21 @@ def extract_julia_code(response_text: str) -> str:
 def short_hash(text: str) -> str:
     """12-char SHA256 prefix. Enough for uniquely identifying prompts/code in logs."""
     return hashlib.sha256(text.encode()).hexdigest()[:12]
+def load_seed_prompt() -> str:
+    if not config.PROMPT_FILE.exists():
+        raise SystemExit(f"Seed prompt not found: {config.PROMPT_FILE}")
+    return config.PROMPT_FILE.read_text()
+
+
+def build_evolve_prompt(best_code: str, best_fitness: float) -> str:
+    """
+    Load the evolution template and substitute the current best candidate.
+    """
+    if not config.EVOLVE_PROMPT_FILE.exists():
+        raise SystemExit(f"Evolve prompt not found: {config.EVOLVE_PROMPT_FILE}")
+    template = config.EVOLVE_PROMPT_FILE.read_text()
+    return (
+        template
+        .replace("{{BEST_CODE}}", best_code)
+        .replace("{{BEST_FITNESS}}", f"{best_fitness:.4f}")
+    )

@@ -11,6 +11,7 @@ REPO_ROOT    = LLM_LOOP_DIR.parents[2]                  # .../pdptw-se
 JULIA_DIR    = REPO_ROOT / "src" / "julia"              # where pdptwse.jl lives
 
 PROMPT_FILE       = LLM_LOOP_DIR / "prompts" / "seed.md"
+EVOLVE_PROMPT_FILE = LLM_LOOP_DIR / "prompts" / "evolve.md"
 CANDIDATE_FILE    = LLM_LOOP_DIR / "candidates" / "current.jl"
 CANDIDATES_LOG    = LLM_LOOP_DIR / "logs" / "candidates.jsonl"
 GENERATIONS_LOG   = LLM_LOOP_DIR / "logs" / "generations.jsonl"
