@@ -34,7 +34,7 @@ INSTANCE_GRID_FULL = [
 
 # Single-instance grid for fast iteration while developing the loop mechanics.
 INSTANCE_GRID_DEV = [
-    "06R_06V_02I_04M/t1/lr101",
+    "10R_10V_02I_04M/t1/lr101",
 ]
 
 # ---------- Mode ----------
@@ -48,7 +48,7 @@ INSTANCE_GRID = INSTANCE_GRID_DEV if MODE == "dev" else INSTANCE_GRID_FULL
 INSTANCE_BASE_PATH = "../../instances/multi_island/orig_ams_fg/"
 SEED               = 17
 MAX_TIME           = 60      # seconds per MSLP run
-MSLP_ITERS         = 100     # --mslpa
+MSLP_ITERS         = 10     # --mslpa
 ALPHA              = 0.05
 JULIA_TIMEOUT      = 180     # kill Julia process if it hangs beyond this
 

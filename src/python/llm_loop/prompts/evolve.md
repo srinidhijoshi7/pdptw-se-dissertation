@@ -75,8 +75,9 @@ end
 1. Defining helper functions at file scope.
 2. Guessing field names with `hasproperty`.
 3. Falling back to `rand(params.rng)` as the dominant branch — that gives you the random baseline, not an improvement.
-4. Returning the wrong type (not `Vector{Int64}`) or the wrong indices (values not in `inst.V_p`).
-5. Modifying `inst.V_p` in place.
+4. Returning `copy(inst.V_p)` (or the input order unmodified) as an early-return or fallback — that delegates ordering to the instance file's implicit order. Commit to your strategy.
+5. Returning the wrong type (not `Vector{Int64}`) or the wrong indices (values not in `inst.V_p`).
+6. Modifying `inst.V_p` in place.
 
 ## Output format
 

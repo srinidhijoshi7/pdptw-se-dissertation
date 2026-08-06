@@ -86,8 +86,9 @@ Real candidates on this task have failed for these specific reasons — do not r
 1. **Defining helper functions at file scope** (outside `llm_candidate_score`). This causes world-age errors. Nest any helper inside the main function as a closure, or inline it.
 2. **Guessing field names** with `hasproperty(job, :pos)`, `hasproperty(job, :floor)`, etc. Use the exact fields listed above.
 3. **Fallback-to-random** as the dominant strategy. If your function's high-probability branch is `scores[k] = rand(params.rng)`, you have not designed a heuristic — you've built a random baseline in disguise. Commit to a deterministic-plus-perturbation strategy.
-4. **Wrong return type.** The dispatcher expects `Vector{Int64}`. `Vector{Any}`, tuples, or index-into-`1:n` (rather than into `inst.V_p`) will fail.
-5. **Modifying `inst.V_p` in place.** It's the shared pickup list; sort a copy, or use `sortperm` and index.
+4. **Fallback-to-natural-order** as an escape hatch. Returning `copy(inst.V_p)` or `inst.V_p[1:n]` unmodified, or having an early-return that yields the input order without meaningful reordering, is a hedge — it delegates the ordering decision to whatever order the instance file happens to use. Do not use `return copy(inst.V_p)` as a fallback; commit to your chosen ordering.
+5. **Wrong return type.** The dispatcher expects `Vector{Int64}`. `Vector{Any}`, tuples, or index-into-`1:n` (rather than into `inst.V_p`) will fail.
+6. **Modifying `inst.V_p` in place.** It's the shared pickup list; sort a copy, or use `sortperm` and index.
 
 ## Output format
 
