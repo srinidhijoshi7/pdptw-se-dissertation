@@ -16,6 +16,9 @@ DIVERSIFY_PROMPT_FILE = LLM_LOOP_DIR / "prompts" / "diversify.md"
 CANDIDATE_FILE    = LLM_LOOP_DIR / "candidates" / "current.jl"
 CANDIDATES_LOG    = LLM_LOOP_DIR / "logs" / "candidates.jsonl"
 GENERATIONS_LOG   = LLM_LOOP_DIR / "logs" / "generations.jsonl"
+# Optional: if this file exists, gen 0 loads it as the champion instead of
+# calling Gemini with the seed prompt. Lets us continue evolution across days.
+CHAMPION_SEED_FILE = LLM_LOOP_DIR / "champions" / "champion_seed.jl"
 BASELINES_FILE    = LLM_LOOP_DIR / "baselines.json"
 
 GEMINI_MODEL = "gemini-3.6-flash"
@@ -53,6 +56,6 @@ ALPHA              = 0.05
 JULIA_TIMEOUT      = 180     # kill Julia process if it hangs beyond this
 
 # ---------- Evolution ----------
-LAMBDA             = 3       # candidates generated per generation
-NUM_GENERATIONS    = 5       # for first real run
+LAMBDA             = 2       # candidates generated per generation
+NUM_GENERATIONS    = 8       # for first real run
 STAGNATION_THRESHOLD = 2     # generations without improvement -> use diversify prompt
