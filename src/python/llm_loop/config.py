@@ -43,7 +43,7 @@ INSTANCE_GRID_DEV = [
 # ---------- Mode ----------
 # "dev"  = single instance, fast turnaround, use while debugging loop mechanics
 # "full" = 6 instances, real experiment, use for final runs
-MODE = "dev"
+MODE = "full"
 
 INSTANCE_GRID = INSTANCE_GRID_DEV if MODE == "dev" else INSTANCE_GRID_FULL
 

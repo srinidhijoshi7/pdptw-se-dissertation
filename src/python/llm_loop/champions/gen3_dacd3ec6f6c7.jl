@@ -1,6 +1,19 @@
-# Current best champion (Chat 06 grid-optimised)
-# Hash: dacd3ec6f6c7, grid fitness: 0.9969
-
+# Third-generation LLM champion — full-grid optimised
+# Ancestor: cbbe47d2468c (Chat 05 champion, single-instance optimised)
+# This candidate: dacd3ec6f6c7, grid fitness 0.9969
+# Optimised on: all 6 instances (MODE=full), seed 17, --mslpa 10
+# Model: gemini-3.6-flash
+# Generation: 3, Slot: 0, Prompt kind: diversify
+# Parent hash: cbbe47d2468c
+#
+# Per-instance ratios (< 1.0 = beats random on that instance):
+#   06R_06V_02I_04M/t1/lr101: 1.0000
+#   06R_06V_02I_04M/t1/lr102: 1.0000
+#   06R_06V_02I_04M/t1/lr103: 0.9989
+#   06R_06V_02I_04M/t2/lr201: 1.0000
+#   10R_10V_02I_04M/t1/lr101: 0.9744
+#   10R_10V_02I_04M/t1/lr102: 1.0082
+#
 function llm_candidate_score(inst::InstanceData, params::ParameterData)::Vector{Int64}
     n = inst.n
     if n <= 1
