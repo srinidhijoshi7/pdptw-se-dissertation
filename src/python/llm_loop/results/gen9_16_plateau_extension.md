@@ -31,9 +31,7 @@ of 0.9969. The diversify prompt fired 6 times in this extension and
 generated candidates with distinct code hashes each time (no
 regeneration of prior candidates), but no candidate broke the plateau.
 
-This is a real empirical ceiling for LLM-driven heuristic evolution
-under this configuration (gemini-3.6-flash, λ=2, --mslpa=10, ratio
-fitness against random baseline on the full 6-instance grid).
+No candidate matched Gen 3's seed-17 grid fitness of 0.9969 across 16 additional generations, providing empirical evidence of a plateau at this specific fitness configuration (seed 17, --mslpa=10, gemini-3.6-flash, λ=2). This is a plateau in the evolutionary search under a fixed evaluation configuration — not a claim about generalisation across seeds, which is characterised separately in the multi-seed evaluation.
 
 Gen 3 `dacd3ec6f6c7` is therefore the terminal champion of the
 evolutionary search reported in the dissertation.
