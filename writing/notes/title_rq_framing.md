@@ -1,6 +1,6 @@
 # Title, Research Question, Abstract Seed
 
-*Working anchor document. Everything in the dissertation must be consistent with this. If title, RQ, or abstract changes, update all three here first.*
+Working anchor document. Everything in the dissertation must be consistent with this. This is the single source of truth — if the title, RQ, or abstract changes, update it here.
 
 ## Working title
 

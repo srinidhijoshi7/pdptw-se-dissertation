@@ -1,12 +1,16 @@
 # Writing Workspace
 
-Full prose drafts live in Google Docs:
-- Folder: "Dissertation Drafts" (Google Drive)
-- Access: Sunil Tiwari as Commenter
+All dissertation drafts live in this directory as Markdown files, tracked in git.
 
-This `writing/` directory holds planning artefacts only:
-- `notes/title_rq_framing.md` — title, primary RQ, sub-RQs, abstract seed
-- `notes/ch2_outline.md` — section-by-section literature review plan
+Structure:
+- `01_abstract.md` through `07_conclusion.md` — chapter drafts
+- `references.md` — reference list (Harvard style)
+- `notes/` — planning artefacts, outlines, working documents
 
-Final submission (early September): export Google Docs chapters to
-Word, assemble with the Bristol title page template, submit as PDF.
+Workflow:
+- Write in VS Code with Markdown preview (`Cmd+K V` for side-by-side)
+- Commit per section — clean history, easy to point Sunil at specific work
+- Convert to Word via Pandoc in the final week (late August) for submission
+
+Anchor: `notes/title_rq_framing.md` holds the title, primary RQ, sub-RQs
+and abstract seed. Everything else must stay consistent with it.
