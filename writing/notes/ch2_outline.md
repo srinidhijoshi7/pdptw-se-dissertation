@@ -17,7 +17,8 @@ Anchor citations:
 - Savelsbergh, Sol (1995) — the General Pickup and Delivery Problem
 - Solomon (1987) — VRPTW; the benchmark family your instances derive from
 - Lenstra, Rinnooy Kan (1981) — complexity of routing/scheduling
-- Berbeglia et al. (2010), Parragh, Doerner, Hartl (2008) — surveys
+- Berbeglia, Cordeau, Gribkovskaia and Laporte (2007) — TOP survey with three-field classification
+- Parragh, Doerner and Hartl (2008) — companion survey with mathematical formulations
 - Ropke, Cordeau (2009) — branch-and-cut-and-price for exact PDPTW
 
 Argument arc: define PDPTW, explain what makes it hard, establish
