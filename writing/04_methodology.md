@@ -4,6 +4,43 @@
 
 ## 3.1 Problem statement and evaluation setup
 
+### 3.1 Problem statement and evaluation setup
+
+Chapter 2 established that the pickup and delivery problem with time windows
+and scheduling on the edges (PDPTW-SE) is a computationally challenging
+integrated routing–scheduling problem for which a state-of-the-art
+multi-start heuristic exists (Barbosa, Tiwari and Melo, 2026), and that a
+recent line of work in large-language-model-driven algorithm discovery has
+begun to yield heuristic components that match or exceed hand-designed
+counterparts in adjacent combinatorial-optimisation settings. The research
+questions posed in §2.7 ask whether that line of work can be extended to a
+research-grade heuristic for the PDPTW-SE — specifically, whether an LLM
+embedded in an evolutionary loop can discover insertion-scoring functions
+that improve on the two hand-designed baselines within the Multi-Start
+LP-Improvement (MSLP) heuristic, whether such improvements generalise across
+seed variation, and what the structural characteristics of successful
+candidates reveal about the mechanism of LLM-driven heuristic evolution.
+
+This chapter describes the experimental pipeline built to answer those
+questions. Section 3.2 sets out the MSLP baseline as introduced by Barbosa,
+Tiwari and Melo (2026), identifying the service-order rule that governs the
+initial insertion pass and that will serve as the injection surface for
+LLM-generated candidates. Section 3.3 describes that injection surface at the
+code level and the technical mechanism that makes runtime code loading
+possible in Julia. Section 3.4 defines the fitness function, the six-instance
+evaluation grid, and the single-seed and multi-seed evaluation regimes that
+Chapter 4 will report against. Sections 3.5 and 3.6 present the outer
+optimisation itself — the (1+λ) evolutionary loop and the three-prompt
+cascade of seed, evolve, and diversify prompts that drive it. Section 3.7
+consolidates every model parameter, software version, and reproducibility
+artefact into a single reference. Section 3.8 discharges the ethical
+requirements for the study.
+
+Chapter 4 then applies this pipeline to produce the three-champion
+progression, the multi-seed variance analysis, and the per-instance
+comparison against baselines that constitute the empirical answer to the
+research questions posed in §2.7.
+
 ## 3.2 The MSLP baseline (Barbosa, Tiwari and Melo, 2026)
 
 Barbosa, Tiwari and Melo (2026) propose a Multi-Start LP-Improvement (MSLP)
