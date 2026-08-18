@@ -166,7 +166,7 @@ loop terminates, the resulting champions are re-evaluated on a wider seed
 grid, {17, 42, 100, 200, 500}, to distinguish genuine algorithmic
 improvement from single-seed artefacts. Chapter 4 reports both the
 evolution-time fitness values and the multi-seed re-evaluation results, and
-§5 draws on the latter to bound the strength of the empirical claims.
+Chapter 5 draws on the latter to bound the strength of the empirical claims.
 
 The instance grid comprises six instances from the multi-island family of the
 Barbosa et al. (2026) benchmark: `lr101`, `lr102`, `lr103` and `lr201` from
