@@ -4,7 +4,28 @@
 
 ## 4.1 Chapter roadmap
 
-*[To be written last, after §§4.2–4.7 exist.]*
+Chapter 4 reports the empirical outcomes of running the pipeline described
+in Chapter 3 against the research questions posed in §2.7. Section 4.2
+introduces the three LLM-evolved champions produced across the
+experimental record, with their configurations and lineage. Section 4.3
+presents the single-seed comparison of these champions against the two
+hand-designed baselines on the six-instance grid, in the form of the
+definitive Table 4.1. Section 4.4 extends that comparison across five
+seeds and reports the multi-seed variance analysis that Chapter 5 draws
+on to bound the strength of the empirical claims. Section 4.5 zooms in on
+the two per-instance anomalies most relevant to those claims: the
+`lr103-6R` instance on which Gen 3 uniquely beats `random`, and the
+`lr102-10R` instance on which no champion beats `random` at any seed.
+Section 4.6 describes the structural characteristics of the three
+champions as Julia functions. Section 4.7 reports the plateau-confirmation
+extension in which a further eight generations of full-grid evolution,
+seeded from Gen 3, produced no candidate that improved on it.
+
+Chapter 4 is deliberately organised around reporting rather than
+interpretation. Numbers, tables, and structural descriptions appear here;
+the interpretation of what the numbers and structures imply for the
+research questions posed in §2.7 — and for the reach and limits of
+LLM-driven heuristic evolution as a paradigm — is developed in Chapter 5.
 
 ## 4.2 Champion progression
 
