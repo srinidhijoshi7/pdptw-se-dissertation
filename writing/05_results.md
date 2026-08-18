@@ -149,7 +149,40 @@ evolutionary loop — is addressed in Chapter 5.
 
 ## 4.5 Per-instance analysis
 
-*[Section to follow.]*
+`lr103-6R` is the only instance in the grid on which Gen 3 uniquely beats
+`random`. At seed 17, Gen 1 and Gen 2 both lose 3.01–3.35% (Table 4.1),
+their largest single-instance loss on the grid; Gen 3 turns this into a
+0.11% win (0.9989). Under multi-seed evaluation this reversal is
+preserved: Gen 3's mean ratio is 0.9943 ± 0.0121 across the five seeds
+(Table 4.2), with the worst per-seed value at 1.0000 and the best at
+0.9726 (seed 100). Gen 1 and Gen 2, in contrast, retain their negative
+sign under multi-seed evaluation, at means of 1.0287 and 1.0198
+respectively. The instance itself has the smallest absolute `random`
+baseline cost in the grid (454.61 at seed 17) — the smallest problem
+size (six requests) in the multi-island (Type 1) family of Barbosa,
+Tiwari and Melo (2026). The distinguishing feature of the three
+champions relative to this instance is their evolutionary regime: Gen 1
+and Gen 2 were both evolved with fitness computed on a single instance
+(`lr101-10R`) that is structurally unlike `lr103-6R`, while Gen 3 was
+evolved with fitness computed as the mean ratio across all six instances,
+including `lr103-6R` itself. The mechanism by which this training-set
+difference produces the observed structural rebalancing is developed in
+Chapter 5.
+
+`lr102-10R` is the sole instance in the grid on which no champion beats
+`random`, at any seed. At seed 17, Gen 1 ties `random` (1.0000), and
+Gen 2 and Gen 3 both lose 0.82% (Table 4.1). Under multi-seed evaluation
+the picture worsens for the two grid-generalising champions: Gen 2 and
+Gen 3 average 1.0163 and 1.0173 respectively (Table 4.2), and neither
+finds a seed on which they beat `random` on this instance. The
+`tightest_tw` baseline also loses here, and by a larger margin still
+(mean 1.0455 across seeds — the largest baseline loss on any instance in
+the grid). This is the only instance on which every non-`random`
+configuration tested — one hand-designed rule and three LLM-evolved
+candidates — produces a worse result than `random` in expectation. What
+structural property of `lr102-10R` produces this pattern, and what it
+implies for the reach of insertion-order-based heuristics on this
+problem class, is discussed in Chapter 5.
 
 ## 4.6 Structural characteristics of the three champions
 
