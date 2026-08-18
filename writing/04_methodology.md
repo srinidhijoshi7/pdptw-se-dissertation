@@ -313,3 +313,33 @@ at the repository root. This reproduction has been verified cross-machine.
 
 ## 3.8 Ethical considerations
  
+ ### 3.8 Ethical considerations
+
+This dissertation is a computational study using publicly available secondary
+data; it involves no human participants, no primary data collection, no
+personally identifying information, and no commercially sensitive data. The
+benchmark instances used throughout (§3.4) derive from the pickup and
+delivery problem instances of Li and Lim (2001), which are themselves
+constructed from Solomon's (1987) vehicle-routing benchmarks by paired
+sampling; the PDPTW-SE adaptation used here is the multi-island (Type 1)
+instance family released by Barbosa, Tiwari and Melo (2026) alongside their
+paper.
+
+Ethical approval was obtained through the University of Bristol Business
+School Research Ethics Committee under reference 2026-33062-34847 (submitted
+27 June 2026). The original application specified a study of the classical
+Capacitated Vehicle Routing Problem (CVRP) using publicly available benchmark
+sets; during the project, and in consultation with the supervisor, the scope
+was refined to the PDPTW-SE benchmark family described above. The supervisor
+confirmed in writing that this refinement remains within the scope of the
+original approval, as it involves no change of data-collection method, no
+introduction of human subjects, and no departure from the secondary-data
+framing under which the application was granted. The original ethics approval
+form and the supervisor's written confirmation are included in Appendix A.
+
+The dissertation uses a large language model (Google `gemini-3.6-flash`,
+§3.7) as a generator of candidate scoring functions inside the evolutionary
+loop. All LLM-generated code was inspected before evaluation and is
+committed to the repository as an auditable record of every candidate the
+model produced. No LLM-generated content appears in the dissertation prose
+itself; all writing is the author's own.
