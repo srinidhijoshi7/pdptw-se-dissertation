@@ -186,7 +186,53 @@ problem class, is discussed in Chapter 5.
 
 ## 4.6 Structural characteristics of the three champions
 
-*[Section to follow.]*
+Gen 1's scoring function extracts seven features per pickup request —
+earliest pickup time, pair slack (`l[d] − e[p]`), pickup-to-delivery
+Euclidean distance, a cross-region flag, pickup demand, the pickup's region
+coordinate, and the pickup's sweep angle around the instance centroid with
+a randomly-sampled phase φ — min-max normalises them, and combines them
+into a scalar score via a weighted linear sum with eight random weights
+sampled uniformly per MSLP restart. The score contributions are signed:
+earliest pickup, pair slack, sweep angle, and region-coordinate contribute
+positively (later terms sort later); pickup-to-delivery distance, demand,
+and cross-region flag contribute negatively. Pickups are then sorted
+ascending by score to produce the returned permutation. The sweep-angle
+component is the classical Gillett and Miller (1974) sweep heuristic,
+originally developed for capacitated vehicle routing, adapted here to
+PDPTW-SE by using the pickup centroid rather than a depot. Structurally,
+Gen 1 is a **parallel weighted-sum scorer with per-restart weight
+sampling**.
+
+Gen 2 is structurally distinct from Gen 1 in every respect except the
+signature. It extracts pickup and delivery coordinates, `ep`, and `ld` per
+request; computes instance-level normalisation scales for distance and
+time; samples four random weights (space, time, region, slack); selects a
+starting pickup either as the earliest-`ep` request (with probability 0.3)
+or uniformly at random; and then iteratively extends the ordering by
+picking, at each step, the unvisited request that minimises a weighted
+cost of distance from the current request's pickup or delivery to the next
+pickup, a region-change penalty, a time-gap term, and a remaining-slack
+term, with a small uniform jitter. Structurally, Gen 2 is a
+**sequential, one-step-lookahead greedy chain constructor**.
+
+Gen 3 is a **mixture of three construction strategies**, selected
+uniformly by a random draw at every MSLP restart. With probability 0.50,
+it applies a *cluster-then-lexicographic sort*: pickups are keyed by a
+six-tuple whose leading components group by pickup region and prioritise
+cross-region requests, tight pair slack, and early pickups. With
+probability 0.25, it applies a *reverse-deadline lexicographic sort*: the
+key inverts the sign of the latest-delivery time, then the latest-pickup
+time, then the pair slack, ordering the tightest-deadline requests first.
+With the remaining probability 0.25, it applies a *greedy spatio-temporal
+nearest chain* whose structure closely mirrors Gen 2's chain
+constructor but with a strict three-tuple lexicographic key (region
+change, time gap, distance) for tie-breaking. The three strategies span
+three distinct construction paradigms — cluster-then-sort, reverse
+deadline, and greedy chain — and the LLM was invoked under the diversify
+prompt (§3.6) that had explicitly asked for a structurally different
+candidate rather than a refinement of the incumbent. The relationship
+between the diversify prompt's family list (§3.6) and the three families
+Gen 3 actually implements is discussed in Chapter 5.
 
 ## 4.7 Evolutionary plateau (generations 9–16)
 
