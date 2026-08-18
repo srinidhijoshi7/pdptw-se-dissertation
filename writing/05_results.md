@@ -96,7 +96,56 @@ champions' behaviour under seed variation.
 
 ## 4.4 Multi-seed variance analysis
 
-*[Section to follow.]*
+The three champions and the two baseline rules were re-evaluated on the same
+six-instance grid at five seeds — {17, 42, 100, 200, 500} — with all other
+parameters (`--mslpa = 10`, `--alpha = 0.05`, `--max_time = 60`, `--threads = 1`)
+held constant. `random` baseline costs were recomputed at each seed and used
+as the denominator for the same-seed ratios reported in Table 4.2; every
+ratio in the table shares its numerator and denominator seed. The run
+comprised 90 champion evaluations plus 30 baseline evaluations, all completed
+without failure.
+
+**Table 4.2.** Multi-seed evaluation on the six-instance grid across seeds
+{17, 42, 100, 200, 500}. Cells report the mean and standard deviation of the
+per-seed ratio to the same-seed `random` baseline (n = 5); lower is better.
+The best (lowest) mean ratio in each row is bolded.
+
+| Instance   | `tightest_tw`         | Gen 1                 | Gen 2                 | Gen 3                     |
+|------------|-----------------------|-----------------------|-----------------------|---------------------------|
+| lr101-6R   | 1.0024 ± 0.0014       | 1.0011 ± 0.0019       | **0.9994 ± 0.0014**   | 1.0024 ± 0.0014           |
+| lr102-6R   | 1.0053 ± 0.0000       | 1.0011 ± 0.0024       | **1.0000 ± 0.0000**   | 1.0021 ± 0.0029           |
+| lr103-6R   | 1.0163 ± 0.0122       | 1.0287 ± 0.0375       | 1.0198 ± 0.0145       | **0.9943 ± 0.0121**       |
+| lr201-6R   | 0.9960 ± 0.0089       | 1.0200 ± 0.0201       | **0.9930 ± 0.0082**   | 0.9960 ± 0.0089           |
+| lr101-10R  | 1.0123 ± 0.0714       | **0.9814 ± 0.0831**   | 1.0065 ± 0.0496       | 1.0025 ± 0.0993           |
+| lr102-10R  | 1.0455 ± 0.0110       | **1.0068 ± 0.0143**   | 1.0163 ± 0.0117       | 1.0173 ± 0.0126           |
+| **Mean**   | 1.0130 ± 0.0175       | 1.0065 ± 0.0265       | 1.0058 ± 0.0142       | **1.0024 ± 0.0229**       |
+
+Two observations follow from the table. First, the monotonic mean-ratio
+improvement across the three champions holds under multi-seed evaluation
+— Gen 1 (1.0065) → Gen 2 (1.0058) → Gen 3 (1.0024) — and all three
+champions produce a lower mean ratio than the `tightest_tw` baseline
+(1.0130). Second, however, no champion produces a mean ratio below 1.0 on
+the grid: at this seed range and instance grid, none of the three
+champions beats the `random` baseline on average. The favourable
+seed-17 picture reported in §4.3 (Gen 3 mean of 0.9969) is therefore a
+single-seed slice; averaged across five seeds it moves upward to 1.0024,
+above parity with `random`.
+
+The per-instance picture is more differentiated. Gen 3 beats `random` on
+`lr103-6R` across all five seeds (mean 0.9943, worst-case 1.0000), and on
+`lr201-6R` in mean (0.9960), reproducing the seed-17 breakthrough on
+`lr103-6R` under seed variation. `lr101-10R` shows large per-seed variance
+for every candidate (standard deviations in the range 0.05–0.10), with
+individual per-seed ratios ranging from 0.9005 (Gen 1 at seed 42) to
+1.1095 (Gen 3 at seed 100), indicating that MSLP at `--mslpa = 10` on this
+instance is highly seed-sensitive irrespective of the injected ordering.
+`lr102-10R` remains a persistent negative case for the two grid-optimised
+champions: Gen 2 and Gen 3 both lose 1.63–1.73% on average, and neither
+finds a seed at which they beat `random` on this instance. What these
+observations imply about the reach and limits of LLM-driven heuristic
+evolution in this setting — and about the interaction between MSLP's
+own seed-sensitivity and the discriminative signal available to the
+evolutionary loop — is addressed in Chapter 5.
 
 ## 4.5 Per-instance analysis
 
