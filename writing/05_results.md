@@ -236,4 +236,44 @@ Gen 3 actually implements is discussed in Chapter 5.
 
 ## 4.7 Evolutionary plateau (generations 9–16)
 
-*[Section to follow.]*
+To test whether Gen 3 represented a terminal plateau or a local flat region
+of the search, a second evolutionary session was run under the same
+protocol as the session that produced it: MODE = full, six-instance grid,
+seed 17, λ = 2, `--mslpa = 10`, `NUM_GENERATIONS = 8`. The session was
+seeded from Gen 3 via the champion-seed mechanism (§3.5), giving sixteen
+generations of full-grid evolution in total across the two sessions. All
+sixteen extension offspring — eight generations of λ = 2 candidates each —
+completed without failure. The stagnation counter (§3.5) triggered the
+diversify prompt six times in the extension, from generation 3 onward, and
+each firing produced a candidate with a distinct code hash (no regeneration
+of prior candidates).
+
+**Table 4.3.** Best per-generation candidate fitness in the extension
+session. All eight generations were strictly worse than Gen 3's grid
+fitness of 0.9969.
+
+| Extension gen | Prompt    | Best fitness | Δ vs Gen 3 |
+|---------------|-----------|--------------|------------|
+| 1             | evolve    | 1.0150       | +0.0181    |
+| 2             | evolve    | 1.0190       | +0.0221    |
+| 3             | diversify | 1.0062       | +0.0093    |
+| 4             | diversify | 1.0159       | +0.0190    |
+| 5             | diversify | 1.0226       | +0.0257    |
+| 6             | diversify | 1.0152       | +0.0183    |
+| 7             | diversify | 1.0069       | +0.0100    |
+| 8             | diversify | 1.0086       | +0.0117    |
+
+No candidate in the extension improved on Gen 3. The best candidate across
+the sixteen extension offspring achieved fitness 1.0062 (generation 3, slot
+1, diversify prompt) — 0.93% above Gen 3. Aggregating across both sessions,
+sixteen generations produced thirty-two candidates in total, none of which
+matched or exceeded Gen 3's grid fitness of 0.9969 at seed 17. This is a
+plateau in the evolutionary search under a fixed evaluation configuration
+(seed 17, `--mslpa = 10`, `gemini-3.6-flash`, λ = 2), not a claim about
+generalisation across seeds — the latter is the subject of §4.4. Gen 3 is
+therefore reported as the terminal champion of the full-grid trajectory on
+the strength of thirty-two candidates evaluated across two sessions rather
+than one. The implications of this plateau — whether it reflects a limit
+of the (1+λ = 2) evolutionary strategy, a model-capability ceiling for
+`gemini-3.6-flash`, an artefact of the `--mslpa = 10` evaluation harness,
+or some combination — are addressed in Chapter 5.
