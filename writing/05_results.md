@@ -50,7 +50,49 @@ these three champions define the trajectory that §§4.3–4.7 unpack.
 
 ## 4.3 Grid comparison against baselines
 
-*[Section to follow.]*
+The three champions and the two hand-designed baseline rules — `random` and
+`tightest_tw`, both defined in §3.2 — were evaluated on the six-instance
+multi-island (Type 1) grid at seed 17 with `--mslpa = 10`, `--alpha = 0.05`.
+Table 4.1 reports the resulting costs and per-instance ratios of candidate
+cost to the same-seed `random` baseline; ratios below 1.0 indicate the
+candidate beat `random` on that instance, ratios above 1.0 indicate it lost,
+and 1.000 indicates parity.
+
+**Table 4.1.** Single-seed (seed 17) grid comparison at `--mslpa = 10`.
+Absolute `random` cost is shown in the second column; the remaining columns
+report ratios to that column, so lower is better. The best (lowest) ratio in
+each row is bolded. Instance paths: `06R_06V_02I_04M/t1/` for `lr101-6R`,
+`lr102-6R`, `lr103-6R`; `06R_06V_02I_04M/t2/` for `lr201-6R`;
+`10R_10V_02I_04M/t1/` for `lr101-10R`, `lr102-10R`.
+
+| Instance   | random (cost) | `tightest_tw` | Gen 1      | Gen 2       | Gen 3       |
+|------------|---------------|---------------|------------|-------------|-------------|
+| lr101-6R   | 766.20        | 1.0000        | 1.0000     | **0.9969**  | 1.0000      |
+| lr102-6R   | 542.25        | 1.0053        | 1.0053     | **1.0000**  | **1.0000**  |
+| lr103-6R   | 454.61        | 1.0176        | 1.0335     | 1.0301      | **0.9989**  |
+| lr201-6R   | 846.44        | 1.0000        | 1.0000     | **0.9925**  | 1.0000      |
+| lr101-10R  | 1297.54       | 0.9908        | 0.9757     | **0.9681**  | 0.9744      |
+| lr102-10R  | 1033.45       | 1.0382        | **1.0000** | 1.0082      | 1.0082      |
+| **Mean**   |               | 1.0087        | 1.0024     | 0.9993      | **0.9969**  |
+
+Reading the table row by row, Gen 2 is the strict winner or joint winner on
+five of the six instances at this seed, with a decisive win on `lr101-10R`
+(the instance on which it was evolved). Gen 3 is the only champion that
+beats `random` on `lr103-6R`, an instance on which Gen 1 and Gen 2 both
+lose by 3.01–3.35%. `lr102-10R` is a persistent negative case for the two
+grid-generalising champions (Gen 2 and Gen 3), which both lose 0.82%;
+only Gen 1 matches `random` on this instance, and only by tying it exactly.
+The `tightest_tw` baseline is worse than or equal to `random` on every
+instance except `lr101-10R`, where it produces a modest 0.92% improvement.
+
+Aggregating across the six instances, mean ratios improve monotonically
+across the three champions: 1.0024 (Gen 1) → 0.9993 (Gen 2) → 0.9969
+(Gen 3). All three LLM-evolved champions produce a lower mean ratio than
+the `tightest_tw` baseline (1.0087), and Gen 2 and Gen 3 produce a lower
+mean ratio than `random` (1.0000). This picture — a single seed on a fixed
+grid — is the starting point for §4.4, which extends the evaluation across
+five seeds to test whether the seed-17 result is representative of the
+champions' behaviour under seed variation.
 
 ## 4.4 Multi-seed variance analysis
 
