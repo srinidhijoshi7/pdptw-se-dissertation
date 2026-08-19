@@ -152,6 +152,12 @@ seed-17 picture reported in §4.3 (Gen 3 mean of 0.9969) is therefore a
 single-seed slice; averaged across five seeds it moves upward to 1.0024,
 above parity with `random`.
 
+Figure 4.2 visualises the same data as Table 4.2, making both patterns
+immediately readable: the parity line at 1.0 separates each instance's
+bars into those that beat `random` in mean and those that do not.
+
+![**Figure 4.2.** Per-instance multi-seed mean ratios for the three champions across seeds {17, 42, 100, 200, 500}. Bars show mean ratio to the same-seed `random` baseline; error bars show ±1 standard deviation across the five seeds. The horizontal dashed line indicates parity with `random`; bars below the line indicate the champion beats `random` on that instance in mean.](figures/fig4_2_per_instance.png)
+
 The per-instance picture is more differentiated. Gen 3 beats `random` on
 `lr103-6R` across all five seeds (mean 0.9943, worst-case 1.0000), and on
 `lr201-6R` in mean (0.9960), reproducing the seed-17 breakthrough on
@@ -283,6 +289,13 @@ fitness of 0.9969.
 | 6             | diversify | 1.0152       | +0.0183    |
 | 7             | diversify | 1.0069       | +0.0100    |
 | 8             | diversify | 1.0086       | +0.0117    |
+
+Figure 4.1 visualises the full sixteen-generation trajectory. The Gen 3
+champion emerges at generation 3 under the diversify prompt (red
+triangle on the reference line); every subsequent candidate across both
+sessions sits strictly above it.
+
+![**Figure 4.1.** Best-of-generation fitness across the sixteen-generation full-grid trajectory. Circles denote generations where the evolve prompt produced the best offspring; triangles denote generations where the diversify prompt did. The horizontal dashed line marks Gen 3's grid fitness of 0.9969. The vertical dotted line at generation 8.5 marks the boundary between session 1 (generations 1–8, which produced Gen 3) and session 2 (generations 9–16, the plateau-confirmation extension).](figures/fig4_1_trajectory.png)
 
 No candidate in the extension improved on Gen 3. The best candidate across
 the sixteen extension offspring achieved fitness 1.0062 (generation 3, slot
