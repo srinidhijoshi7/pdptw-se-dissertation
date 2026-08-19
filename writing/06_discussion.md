@@ -230,4 +230,72 @@ future work in Chapter 6.
 
 ## 5.6 Position against FunSearch, EoH, ReEvo, and honest limitations
 
-*[Section to follow.]*
+This dissertation applies the paradigm of LLM-driven evolutionary program
+search — established by FunSearch (Romera-Paredes et al., 2024) and
+extended by Evolution of Heuristics (Liu et al., 2024) and ReEvo (Ye et
+al., 2024) — to a problem the paradigm has not previously been tested on:
+the Pickup and Delivery Problem with Time Windows and Scheduling on the
+Edges, introduced by Barbosa, Tiwari and Melo (2026). The results of
+Chapter 4 admit specific relational claims against each of the three
+landmarks — what they confirm, what they complicate, and where the
+present study falls short.
+
+Against FunSearch, the results provide a modest confirmation of the
+core mechanism's generalisability. FunSearch showed that a pretrained
+code LLM coupled with a systematic evaluator can advance the state of
+the art on established open problems, primarily in domains — cap-set
+lower bounds, online bin packing — where the evaluator returns a binary
+or narrow-band correctness signal and the program's role is compact and
+combinatorially interpretable. The present work shows the same
+generator-plus-gatekeeper mechanism producing meaningful ordering
+functions in a much richer combinatorial setting — integer scheduling
+constraints, machine-synchronisation edges, and a mixed-region topology
+— under a fitness signal that is continuous rather than binary and an
+evaluator that is itself stochastic. That the mechanism produces
+monotonically improving grid fitness across three generations and a
+structurally novel mixture-of-strategies champion (§4.6, §5.3) is
+evidence that the FunSearch paradigm extends beyond the compact-program
+settings in which it was first demonstrated. The confirmation is modest 
+because the compute scale here — sixteen generations, thirty-two candidates, 
+gemini-3.6-flash on a twenty-request-per-day free-tier quota — is roughly four 
+orders of magnitude smaller than the sampling regime FunSearch operated under. 
+What the paradigm can achieve at FunSearch-scale compute on PDPTW-SE remains an 
+open question this dissertation cannot address.
+
+Against EoH, the results complicate the implicit population-size claim
+and add a specific empirical observation about prompt-cascade design.
+EoH argued for co-evolving natural-language thoughts and executable code
+under a four-prompt taxonomy (e1, e2, m1, m2) with populations
+substantially larger than the (1+λ = 2) strategy used here, and
+demonstrated sample-efficiency gains against FunSearch on bin packing.
+The present work reduced EoH's four-prompt taxonomy to three
+(seed/evolve/diversify) and used a population of two, and hit a plateau
+after sixteen generations that EoH's larger populations might have
+escaped. Whether the plateau is attributable to population size,
+prompt-cascade coarseness, model capability, or evaluation-harness
+saturation is exactly the ambiguity §5.4 refuses to resolve. What the
+present work adds is a specific observation §5.3 already developed: the
+diversify prompt's family menu was, in the Gen 3 case, treated by the
+LLM as a compositional palette rather than a selection list — three of
+the five named families appeared as branches of a single mixture
+candidate. Whether this compositional behaviour is a general property of
+sufficiently capable proposers or an idiosyncrasy of `gemini-3.6-flash`
+on this problem is the natural question to investigate at larger scale.
+
+Against ReEvo, the present work does not implement the reflection
+mechanism that ReEvo introduced — a separate "reflector" LLM that
+compares parent heuristics in natural language and distils long-term
+design hints — and its absence is the most direct account of what the
+present pipeline lacks. The diversify prompt (§3.6) provides a form of
+structured exploration relaunch but does not accumulate long-horizon
+reasoning across generations; the loop's memory extends only to the
+current champion and its immediate fitness. A ReEvo-style reflection
+layer, added between the champion display and the offspring generation
+step, would be a natural extension and might address the plateau
+Explanation 1 of §5.4 identifies. Beyond the missing reflection layer,
+this dissertation is bounded by four honest limitations: it evaluates
+only one LLM (`gemini-3.6-flash`), on one problem (PDPTW-SE, and only
+its multi-island Type 1 instances of ≤ 10 requests), at one restart
+budget (`--mslpa = 10`), under one prompt-cascade design (three prompts,
+menu-of-five diversify families). Chapter 6 develops the specific
+extension experiments that would relax each of these bounds.
