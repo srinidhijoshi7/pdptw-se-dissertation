@@ -184,7 +184,49 @@ are the substance of Chapter 6's future work.
 
 ## 5.5 The lr102-10R persistent negative
 
-*[Section to follow.]*
+On `lr102-10R`, no champion beats `random` at any of the five evaluation
+seeds. The `tightest_tw` baseline also loses on this instance, and by the
+largest margin of any baseline-instance pair in the grid (mean 1.0455,
+Table 4.2). Every non-`random` service-order configuration tested in this
+dissertation — one hand-designed rule and three LLM-evolved candidates,
+spanning parallel weighted-sum scoring, sequential greedy chain
+construction, and probabilistic mixtures of three distinct strategies —
+produces a worse expected outcome than a uniform random permutation on
+this instance. This is a striking pattern, and its interpretation is
+narrower than it may first appear.
+
+The pattern most naturally reads as evidence about the class of methods
+to which every configuration tested belongs, rather than evidence against
+any specific configuration within it. All five candidates — the two
+baseline rules and the three LLM-evolved champions — impose a
+deterministic-plus-perturbation ordering on the pickup requests before
+the semi-greedy insertion phase begins. `random`, by contrast, imposes no
+prior structure at all, leaving the semi-greedy insertion's own
+α-controlled restricted-candidate-list selection (§3.2) to construct the
+ordering implicitly through its per-restart choices. If `lr102-10R` has
+structural features that make any prior ordering worse in expectation
+than a purely random one — for instance, if its request geometry is such
+that adjacent-in-ordering requests tend to have incompatible time
+windows, so imposed orderings systematically produce insertion sequences
+the LP-improvement phase (§3.2) cannot recover from — then the failure
+mode is intrinsic to the family of insertion-order-based heuristics, not
+to the specific orderings within it. The LLM did not fail to find a
+better ordering on `lr102-10R`; there may not be one to find, within the
+family of methods it was asked to search over.
+
+This is a real limitation of the paradigm as instantiated here, and it
+matters both for reporting and for extension. For reporting, it must be
+named as a limitation and not obscured — no champion universally beats
+`random` on the grid, and the reason is not stochastic noise but a
+specific instance on which the entire method class underperforms
+`random`. For extension, it suggests that a natural direction for this
+line of work is not another prompt-cascade refinement or a larger
+evolutionary budget but an injection point outside the initial-ordering
+family — for example, evolving a ruin-and-recreate operator inside a
+large-neighbourhood-search wrapper, where the LLM's contribution would
+determine which requests to remove and which to reinsert. That extension
+sits outside the scope of the present dissertation and is developed as
+future work in Chapter 6.
 
 ## 5.6 Position against FunSearch, EoH, ReEvo, and honest limitations
 
