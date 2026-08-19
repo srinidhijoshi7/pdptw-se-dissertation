@@ -64,7 +64,55 @@ in §§5.4 and 5.6.
 
 ## 5.3 The diversify mechanism and the Gen 3 mixture
 
-*[Section to follow.]*
+Three concrete observations about Gen 3's genesis carry interpretive weight
+beyond the numerical results of Chapter 4. The first is that the diversify
+prompt fired exactly when its design anticipated. The stagnation counter
+(§3.5) is configured to fire when two consecutive generations produce no
+improvement over the incumbent; in the full-grid run, Gen 3 emerged at
+generation 3, slot 0, after generations 1 and 2 each produced offspring
+that failed to beat the seeded Gen 2 champion. The diversify prompt
+therefore did not fire eagerly (before genuine local exhaustion) or
+tardily (long after it) — it fired precisely at the point of local
+exhaustion the design was engineered around. This alignment between
+design and observed behaviour is a small but concrete validation of the
+stagnation-triggered prompt-switching mechanism, and is the first instance
+across the sixteen generations of full-grid evolution where diversify
+directly produced a winning candidate.
+
+The second observation concerns the content of what Gen 3 produced. The
+diversify prompt (§3.6, Appendix B) explicitly names five candidate
+strategy families the LLM may draw from: lexicographic ordering,
+cluster-then-order, greedy nearest-in-time, reverse-order construction,
+and pair-tightness ordering. Gen 3's three mode branches (§4.6) implement,
+respectively: cluster-then-lexicographic sorting (matching two of the
+five prompted families simultaneously — cluster-then-order and
+lexicographic); reverse-deadline lexicographic construction (matching
+reverse-order construction); and greedy spatio-temporal nearest chain
+(matching greedy nearest-in-time). Three of the five prompted families
+therefore appear directly in the winning candidate. The two absent
+families — pair-tightness ordering as a primary key, and pure
+lexicographic sorting without a clustering step — do not appear. The
+prompt's family menu was, in this instance, taken literally.
+
+The third observation is the most methodologically interesting. The
+diversify prompt asks the LLM to pick **one** family (or invent one of
+comparable distinctness); it does not suggest composing multiple. Gen 3
+composed three. The mixture architecture — three complete strategies,
+selected by uniform random draw at every MSLP restart — was the LLM's
+own initiative rather than the prompt's instruction, and it is this
+mixture that beats the two single-strategy predecessors on grid fitness
+and on the multi-seed mean. This connects to a design point about the
+prompt cascade itself. This dissertation reduced the four-prompt
+taxonomy of Evolution of Heuristics (Liu et al., 2024) to three
+(seed/evolve/diversify), collapsing EoH's two exploration prompts (e1,
+e2) into a single stagnation-triggered mechanism. That collapse gave up
+the fine-grained control of EoH's separate exploration variants; what
+this observation suggests is that a sufficiently capable proposer,
+prompted with a menu of distinct families rather than a single one,
+may recover that fine-grained control on its own — by composing multiple
+families rather than picking one. Whether that is a general property of
+LLM-driven heuristic evolution or an idiosyncrasy of `gemini-3.6-flash`
+on this specific problem is beyond the scope of this dissertation.
 
 ## 5.4 The plateau and its four candidate explanations
 
