@@ -116,7 +116,71 @@ on this specific problem is beyond the scope of this dissertation.
 
 ## 5.4 The plateau and its four candidate explanations
 
-*[Section to follow.]*
+Section 4.7 established that Gen 3 is the terminal champion of the
+full-grid trajectory across sixteen generations and thirty-two evaluated
+candidates, at the fixed evaluation configuration {seed 17, `--mslpa = 10`,
+`gemini-3.6-flash`, λ = 2}. What determines the plateau at this specific
+configuration is genuinely unclear, and four candidate explanations are
+worth naming; the evidence within this dissertation distinguishes them
+only partially, and the strongest defensible position is to hold all four
+open rather than to pick a preferred narrative.
+
+**Explanation 1: The (1+λ = 2) evolutionary strategy is too narrow.** With
+only two offspring per generation and strict elitism, the loop's search
+is aggressive on exploitation and thin on exploration; the diversify
+prompt (§3.6) is the only structural exploration mechanism, and it fires
+only after two-generation stagnation. FunSearch (Romera-Paredes et al.,
+2024) samples on the order of millions of candidates across parallel
+islands, and EoH (Liu et al., 2024) uses populations an order of
+magnitude larger than two. The plateau may reflect a search-budget
+insufficiency rather than a mechanism failure. This dissertation cannot
+directly distinguish this from the alternatives below, because the
+Gemini free-tier quota (§3.7) precludes running with larger λ across
+enough generations to test the hypothesis meaningfully.
+
+**Explanation 2: The `gemini-3.6-flash` model has reached a capability
+ceiling on this problem.** The prompt cascade (§3.6) provides increasingly
+targeted guidance across seed, evolve, and diversify variants, yet the
+extension session's diversify candidates in generations 9–16 produced
+neither Gen-3-level fitness nor structural approaches beyond what
+generations 1–8 had already explored. If the LLM's reachable design space
+for insertion-scoring functions on the PDPTW-SE is bounded by the model's
+pretraining exposure to relevant algorithmic literature, the plateau may
+reflect that bound. Testing this requires running the pipeline with a
+higher-capability model on the same problem, which was outside this
+dissertation's scope (§3.7).
+
+**Explanation 3: The `--mslpa = 10` evaluation harness masks the
+discriminative signal.** Section 3.4 justified the choice of ten restarts
+on the grounds that higher values (piloted at 100) collapse the fitness
+signal to three discrete points. Ten restarts restore sensitivity to
+ordering, but the surviving signal is small — most Chapter 4 ratios sit
+within ±3% of 1.000. If further improvements require an ordering that
+strongly differentiates itself from the semi-greedy random selections
+already made across the ten restarts, `--mslpa = 10` may lack the
+resolution to reward candidates that would improve at, say, five restarts
+or a different mix of construction budget and LP-improvement budget.
+Testing this requires a dedicated sweep of restart budgets at fixed
+candidates, which was outside the compute budget of this dissertation.
+
+**Explanation 4: The six-instance grid lacks the structural diversity to
+reward further exploration.** Table 4.2 shows that four of the six
+instances (`lr101-6R`, `lr102-6R`, `lr201-6R`, `lr102-10R`) admit only
+narrow-band ratios around 1.000 for every candidate tested; two
+(`lr103-6R`, `lr101-10R`) show meaningful movement. If mean-ratio fitness
+on this grid is effectively determined by candidate performance on those
+two instances, the evolutionary loop has an implicit sample size of two,
+not six — and a search plateau under such a fitness signal is not
+surprising. Testing this requires expanding the grid to include
+multi-floor (Type 2) instances and larger request counts, which is
+future work (Chapter 6).
+
+The four explanations are not mutually exclusive; more likely the plateau
+reflects some combination of all four. The interpretive stance this
+dissertation takes is deliberate: rather than pick the most convenient
+explanation, it names the space of candidate mechanisms and identifies
+the extension experiments needed to distinguish them. Those extensions
+are the substance of Chapter 6's future work.
 
 ## 5.5 The lr102-10R persistent negative
 
