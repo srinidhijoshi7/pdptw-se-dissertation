@@ -4,7 +4,29 @@
 
 ## 5.1 Chapter roadmap
 
-*[To be written last, after §§5.2–5.6 exist.]*
+Chapter 5 interprets the empirical results reported in Chapter 4 against the
+research questions posed in §2.7 and against the three foundational works
+of LLM-driven algorithm discovery reviewed in §2.6. Where Chapter 4 was
+deliberately organised around reporting — numbers, tables, and structural
+descriptions — Chapter 5 is organised around interpretation: the
+substantive questions Chapter 4 opened but did not close.
+
+Section 5.2 delivers the direct interpretive answers to the three
+sub-questions from §2.7. Section 5.3 develops the methodologically novel
+finding of this dissertation — the genesis of the Gen 3 champion under
+the diversify prompt, and the LLM's compositional treatment of the
+prompt's family menu — as a claim about the mechanism of the
+three-prompt cascade this dissertation designed. Section 5.4 treats the
+plateau at Gen 3 as four candidate explanations rather than one, and
+refuses to pick among them without further experimental evidence.
+Section 5.5 turns the persistent negative result on `lr102-10R` into an
+interpretive contribution about the reach of insertion-order-based
+heuristics on this problem. Section 5.6 positions the results against
+FunSearch (Romera-Paredes et al., 2024), Evolution of Heuristics (Liu
+et al., 2024), and ReEvo (Ye et al., 2024), stating explicitly what the
+present work confirms, complicates, and lacks relative to each; the
+concrete extension experiments that would relax the limitations named
+there are the subject of Chapter 6.
 
 ## 5.2 Answering the research questions
 
