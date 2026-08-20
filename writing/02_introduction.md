@@ -50,6 +50,47 @@ this specific setting.
 
 ## 1.2 Research question and sub-questions
 
+The primary research question this dissertation addresses is: **can large
+language models, embedded in a FunSearch-style evolutionary loop, discover
+insertion-scoring functions that improve on hand-designed baselines within
+Barbosa, Tiwari and Melo's (2026) Multi-Start LP-Improvement heuristic for
+the PDPTW-SE?** Three sub-questions refine this primary question into
+testable form. **RQ1** asks how LLM-evolved candidates compare against
+the two hand-designed baselines — a uniform random shuffle and a
+tightest-time-window sort — across the multi-island (Type 1) benchmark.
+**RQ2** asks whether improvements observed at a fixed evaluation seed
+generalise across seed variation, or whether they are seed-specific
+artefacts of a stochastic evaluator. **RQ3** asks what structural
+characteristics emerge in the candidates the loop produces, and what the
+successes and failures reveal about the mechanism and limits of
+LLM-driven heuristic evolution in a constrained combinatorial-optimisation
+setting.
+
+This dissertation makes three contributions. First, it delivers a working
+LLM-driven evolutionary pipeline targeting the PDPTW-SE injection point,
+including the technical mechanism that enables runtime code loading into
+the base heuristic and the three-prompt cascade — seed, evolve, and
+diversify — that drives the search. Second, it produces an empirical
+characterisation of the pipeline's behaviour across a fixed evaluation
+grid and five random seeds, honestly reporting where the paradigm
+succeeds and where it plateaus. Third, it offers an interpretive
+discussion of what the discovered heuristics reveal about the underlying
+problem structure and about the paradigm's reach — including the
+specific and reproducible ways in which the discovered candidates
+compose the strategies the evolutionary prompts named.
+
+Applied to the six-instance multi-island benchmark, the pipeline
+produced three successive champions across sixteen generations of
+full-grid evolution, exhibiting monotonically improving mean grid
+fitness. All three champions decisively outperform the paper's
+tightest-time-window baseline; the strongest of them beats the random
+baseline on the single-seed grid and on some but not all instances
+under multi-seed evaluation. The evolutionary loop reaches a plateau at
+the third champion, which is confirmed as terminal across a second
+eight-generation session under identical configuration. Chapter 4
+reports these results in full; Chapter 5 develops what they imply for
+the paradigm.
+
 ## 1.3 Contributions
 
 ## 1.4 Dissertation structure
