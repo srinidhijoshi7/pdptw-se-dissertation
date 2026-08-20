@@ -85,3 +85,48 @@ architecture was the LLM's own initiative rather than the prompt's
 instruction.
 
 ## 6.3 Future work
+
+Four extensions to this work are worth naming concretely. Each
+targets a specific limitation identified in Section 5.4 or Section
+5.5, and each requires resources beyond those available to this
+dissertation.
+
+The first extension is a scaling of the evolutionary budget. The
+(1+λ = 2) strategy used here is a quota-driven compression of the
+larger populations used by FunSearch and by the Evolution of
+Heuristics framework. A comparable pipeline run at (1+λ = 5) or
+(µ + λ) with populations of ten or more, across enough generations
+to test whether the Gen 3 plateau reflects search-budget
+insufficiency rather than mechanism failure, would require an API
+subscription and roughly a week of wall-time.
+
+The second extension is a multi-model comparison. This dissertation
+evaluates only `gemini-3.6-flash`, one model in one capability tier.
+Running the same pipeline with a higher-capability model (a larger
+Gemini variant, or a comparable model from another vendor) on the
+same benchmark and prompt cascade would distinguish the
+model-capability ceiling hypothesis (Section 5.4, Explanation 2) from
+the other candidate explanations. Roughly a day of setup and half a
+day of runtime per model.
+
+The third extension is a broadening of the evaluation grid.
+Multi-floor (Type 2) benchmark instances and larger request counts
+were deferred as stretch scope; expanding the grid to include them
+would test whether the plateau at Gen 3 reflects an implicit
+effective sample size of two (Section 5.4, Explanation 4) or a more
+fundamental limit. Rebuilding baselines at the expanded grid across
+five seeds requires roughly two days of Julia runtime.
+
+The fourth and most substantive extension addresses the persistent
+negative on `lr102-10R`. The failure of every insertion-order-based
+configuration on that instance suggests that the natural next
+architectural move is a change of injection point: evolving a
+ruin-and-recreate operator inside a large-neighbourhood-search
+wrapper (Ropke and Pisinger, 2006), where the LLM's contribution
+determines which requests to remove and reinsert rather than in what
+order to construct. This would also open a natural path to
+incorporating a reflection layer between generations (Ye et al.,
+2024) as the mechanism for accumulating design hints across the
+larger search space that ruin-and-recreate opens up. This extension
+is a research programme, not a follow-up experiment, and would
+sit as a natural PhD topic.
