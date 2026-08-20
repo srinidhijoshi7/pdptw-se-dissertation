@@ -140,3 +140,36 @@ Chapter 5. An abstract, ethics documentation, prompt templates, and
 champion source code are provided in appendices.
 
 ## 1.4 Dissertation structure
+
+Three points about the presentation of this work are worth stating at
+the outset.
+
+First, the reporting-versus-interpretation split between Chapters 4
+and 5 is deliberate. Chapter 4 is organised around empirical
+reporting: numbers, tables, structural descriptions, and the two
+figures that make the central patterns visible. It is disciplined
+about not editorialising, and it defers every substantive
+interpretation to Chapter 5. Chapter 5 in turn is organised entirely
+around interpretation — answering the research questions, explaining
+the methodologically significant findings, treating limitations
+honestly, and positioning the results against prior work in the
+field. A reader interested in what happened experimentally can read
+Chapter 4 alone; a reader interested in what those experiments imply
+for the paradigm should read Chapters 4 and 5 together.
+
+Second, the dissertation is intended to be reproducible. The pipeline
+described in Chapter 3 is committed to a private Git repository
+alongside every candidate the evolutionary loop produced, every
+generation log, and every result artefact used to construct the
+tables and figures. The central reproduction — the three-champion
+comparison of Chapter 4 — takes approximately twenty minutes to
+regenerate from a fresh clone with only Julia and Gurobi installed;
+setup and reproduction instructions accompany the code.
+
+Third, the study is a computational one using publicly available
+secondary benchmark data; no human participants, primary data
+collection, or personally identifying information are involved.
+Ethical framing, including the approval history and the disclosure
+of large-language-model usage during code generation, is set out in
+full in Section 3.8, and the approval documentation is included in
+Appendix A.
