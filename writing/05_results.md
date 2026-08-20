@@ -5,7 +5,7 @@
 ## 4.1 Chapter roadmap
 
 Chapter 4 reports the empirical outcomes of running the pipeline described
-in Chapter 3 against the research questions posed in §2.7. Section 4.2
+in Chapter 3 against the research questions posed in Section 2.7. Section 4.2
 introduces the three LLM-evolved champions produced across the
 experimental record, with their configurations and lineage. Section 4.3
 presents the single-seed comparison of these champions against the two
@@ -24,7 +24,7 @@ seeded from Gen 3, produced no candidate that improved on it.
 Chapter 4 is deliberately organised around reporting rather than
 interpretation. Numbers, tables, and structural descriptions appear here;
 the interpretation of what the numbers and structures imply for the
-research questions posed in §2.7 — and for the reach and limits of
+research questions posed in Section 2.7 — and for the reach and limits of
 LLM-driven heuristic evolution as a paradigm — is developed in Chapter 5.
 
 ## 4.2 Champion progression
@@ -32,17 +32,17 @@ LLM-driven heuristic evolution as a paradigm — is developed in Chapter 5.
 Gen 1 (`d1791ed1796e`) was the first LLM-generated candidate in this
 dissertation's experimental record to achieve a fitness value below 1.0000.
 It was produced in an initial evolutionary run seeded from the seed prompt
-(§3.6), with no champion-seed file present, running in dev mode on the
+(Section 3.6), with no champion-seed file present, running in dev mode on the
 `10R_10V_02I_04M/t1/lr101` instance at seed 17, λ = 2, and `--mslpa = 10`.
 On its training instance, Gen 1 achieved a candidate cost of 1265.95
 against a random baseline of 1297.54, giving a fitness of 0.9757 — an
 improvement of 2.43% over the same-seed random rule. The candidate emerged
 at generation 1, slot 0, from the evolve prompt. It is archived at
 `src/python/llm_loop/champions/first_beat_random_d1791ed1796e.jl` with
-provenance metadata; its structural characterisation is deferred to §4.6.
+provenance metadata; its structural characterisation is deferred to Section 4.6.
 
 Gen 2 (`cbbe47d2468c`) was produced in a subsequent dev-mode session,
-seeded from Gen 1 via the champion-seed mechanism (§3.5) rather than from
+seeded from Gen 1 via the champion-seed mechanism (Section 3.5) rather than from
 a fresh seed prompt. Configuration was otherwise identical to the Gen 1
 run: dev mode on lr101-10R, seed 17, λ = 2, `--mslpa = 10`. On the same
 training instance, Gen 2 reached a candidate cost of 1256.16, giving a
@@ -52,7 +52,7 @@ evolve prompt, not from diversify. It is archived at
 `src/python/llm_loop/champions/gen2_cbbe47d2468c.jl`. One contextual point
 matters for what follows: Gen 1 and Gen 2 were both optimised for a single
 instance. Their behaviour on the six-instance grid is a separate question,
-addressed in §4.3.
+addressed in Section 4.3.
 
 Gen 3 (`dacd3ec6f6c7`) was produced in a third session with the
 evolutionary loop reconfigured to compute fitness as the mean ratio across
@@ -63,16 +63,16 @@ constant: seed 17, λ = 2, `--mslpa = 10`. Gen 3 achieved a grid fitness of
 0.9969, a 0.24% improvement over Gen 2 on the same metric. The
 methodologically significant fact is that Gen 3 emerged at generation 3,
 slot 0, from the **diversify** prompt — the first (and, across the sixteen
-generations of full-grid evolution reported in §4.7, only) time the
+generations of full-grid evolution reported in Section 4.7, only) time the
 diversify mechanism directly produced a winning champion. This followed
 two consecutive stagnation generations under the evolve prompt. It is
 archived at `src/python/llm_loop/champions/gen3_dacd3ec6f6c7.jl`. Together,
-these three champions define the trajectory that §§4.3–4.7 unpack.
+these three champions define the trajectory that Sections 4.3–4.7 unpack.
 
 ## 4.3 Grid comparison against baselines
 
 The three champions and the two hand-designed baseline rules — `random` and
-`tightest_tw`, both defined in §3.2 — were evaluated on the six-instance
+`tightest_tw`, both defined in Section 3.2 — were evaluated on the six-instance
 multi-island (Type 1) grid at seed 17 with `--mslpa = 10`, `--alpha = 0.05`.
 Table 4.1 reports the resulting costs and per-instance ratios of candidate
 cost to the same-seed `random` baseline; ratios below 1.0 indicate the
@@ -111,7 +111,7 @@ across the three champions: 1.0024 (Gen 1) → 0.9993 (Gen 2) → 0.9969
 (Gen 3). All three LLM-evolved champions produce a lower mean ratio than
 the `tightest_tw` baseline (1.0087), and Gen 2 and Gen 3 produce a lower
 mean ratio than `random` (1.0000). This picture — a single seed on a fixed
-grid — is the starting point for §4.4, which extends the evaluation across
+grid — is the starting point for Section 4.4, which extends the evaluation across
 five seeds to test whether the seed-17 result is representative of the
 champions' behaviour under seed variation.
 
@@ -148,7 +148,7 @@ champions produce a lower mean ratio than the `tightest_tw` baseline
 (1.0130). Second, however, no champion produces a mean ratio below 1.0 on
 the grid: at this seed range and instance grid, none of the three
 champions beats the `random` baseline on average. The favourable
-seed-17 picture reported in §4.3 (Gen 3 mean of 0.9969) is therefore a
+seed-17 picture reported in Section 4.3 (Gen 3 mean of 0.9969) is therefore a
 single-seed slice; averaged across five seeds it moves upward to 1.0024,
 above parity with `random`.
 
@@ -256,9 +256,9 @@ constructor but with a strict three-tuple lexicographic key (region
 change, time gap, distance) for tie-breaking. The three strategies span
 three distinct construction paradigms — cluster-then-sort, reverse
 deadline, and greedy chain — and the LLM was invoked under the diversify
-prompt (§3.6) that had explicitly asked for a structurally different
+prompt (Section 3.6) that had explicitly asked for a structurally different
 candidate rather than a refinement of the incumbent. The relationship
-between the diversify prompt's family list (§3.6) and the three families
+between the diversify prompt's family list (Section 3.6) and the three families
 Gen 3 actually implements is discussed in Chapter 5.
 
 ## 4.7 Evolutionary plateau (generations 9–16)
@@ -267,10 +267,10 @@ To test whether Gen 3 represented a terminal plateau or a local flat region
 of the search, a second evolutionary session was run under the same
 protocol as the session that produced it: MODE = full, six-instance grid,
 seed 17, λ = 2, `--mslpa = 10`, `NUM_GENERATIONS = 8`. The session was
-seeded from Gen 3 via the champion-seed mechanism (§3.5), giving sixteen
+seeded from Gen 3 via the champion-seed mechanism (Section 3.5), giving sixteen
 generations of full-grid evolution in total across the two sessions. All
 sixteen extension offspring — eight generations of λ = 2 candidates each —
-completed without failure. The stagnation counter (§3.5) triggered the
+completed without failure. The stagnation counter (Section 3.5) triggered the
 diversify prompt six times in the extension, from generation 3 onward, and
 each firing produced a candidate with a distinct code hash (no regeneration
 of prior candidates).
@@ -304,7 +304,7 @@ sixteen generations produced thirty-two candidates in total, none of which
 matched or exceeded Gen 3's grid fitness of 0.9969 at seed 17. This is a
 plateau in the evolutionary search under a fixed evaluation configuration
 (seed 17, `--mslpa = 10`, `gemini-3.6-flash`, λ = 2), not a claim about
-generalisation across seeds — the latter is the subject of §4.4. Gen 3 is
+generalisation across seeds — the latter is the subject of Section 4.4. Gen 3 is
 therefore reported as the terminal champion of the full-grid trajectory on
 the strength of thirty-two candidates evaluated across two sessions rather
 than one. The implications of this plateau — whether it reflects a limit

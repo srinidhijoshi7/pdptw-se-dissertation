@@ -5,14 +5,14 @@
 ## 5.1 Chapter roadmap
 
 Chapter 5 interprets the empirical results reported in Chapter 4 against the
-research questions posed in §2.7 and against the three foundational works
-of LLM-driven algorithm discovery reviewed in §2.6. Where Chapter 4 was
+research questions posed in Section 2.7 and against the three foundational works
+of LLM-driven algorithm discovery reviewed in Section 2.6. Where Chapter 4 was
 deliberately organised around reporting — numbers, tables, and structural
 descriptions — Chapter 5 is organised around interpretation: the
 substantive questions Chapter 4 opened but did not close.
 
 Section 5.2 delivers the direct interpretive answers to the three
-sub-questions from §2.7. Section 5.3 develops the methodologically novel
+sub-questions from Section 2.7. Section 5.3 develops the methodologically novel
 finding of this dissertation — the genesis of the Gen 3 champion under
 the diversify prompt, and the LLM's compositional treatment of the
 prompt's family menu — as a claim about the mechanism of the
@@ -30,7 +30,7 @@ there are the subject of Chapter 6.
 
 ## 5.2 Answering the research questions
 
-The three sub-questions posed in §2.7 admit three distinct answers when
+The three sub-questions posed in Section 2.7 admit three distinct answers when
 evaluated against the results of Chapter 4.
 
 **RQ1 — Comparison against hand-designed baselines.** LLM-evolved candidates
@@ -41,7 +41,7 @@ partially. Under multi-seed evaluation across the six-instance grid (Table
 (Gen 1: 1.0065, Gen 2: 1.0058, Gen 3: 1.0024, all against `tightest_tw`'s
 1.0130). None of the three champions produces a mean ratio strictly below
 1.000, however, which means none beats `random` on average across seeds.
-The favourable single-seed picture reported in §4.3 — Gen 3 at 0.9969,
+The favourable single-seed picture reported in Section 4.3 — Gen 3 at 0.9969,
 0.31% below random — is genuine at seed 17 and reproducible on a fresh
 machine, but is a favourable slice rather than the seed-averaged verdict.
 The honest verdict on RQ1 is: LLM evolution reliably beats a hand-designed
@@ -70,7 +70,7 @@ configured discovers champions that are seed-robust on some instances
 champions exhibit three qualitatively different construction paradigms:
 Gen 1 a parallel weighted-sum scorer with a Gillett-Miller (1974) sweep
 component, Gen 2 a sequential greedy chain constructor, and Gen 3 a
-uniformly-selected mixture of three distinct strategies (§4.6). Two
+uniformly-selected mixture of three distinct strategies (Section 4.6). Two
 observations about this progression carry interpretive weight for the
 mechanism of LLM-driven heuristic evolution. First, each new champion
 was structurally distinct from its parent — the LLM did not converge on a
@@ -80,16 +80,16 @@ champion of the three (Gen 3, on both single-seed grid fitness and
 multi-seed mean) was the one that abandoned single-strategy commitment in
 favour of a probabilistic mixture. The mechanism by which the mixture
 arose — the interaction between the diversify prompt and the LLM's
-apparent hedging behaviour — is developed in §5.3. What the mixture and
+apparent hedging behaviour — is developed in Section 5.3. What the mixture and
 the plateau together imply about the reach of the paradigm is developed
-in §§5.4 and 5.6.
+in Sections 5.4 and 5.6.
 
 ## 5.3 The diversify mechanism and the Gen 3 mixture
 
 Three concrete observations about Gen 3's genesis carry interpretive weight
 beyond the numerical results of Chapter 4. The first is that the diversify
 prompt fired exactly when its design anticipated. The stagnation counter
-(§3.5) is configured to fire when two consecutive generations produce no
+(Section 3.5) is configured to fire when two consecutive generations produce no
 improvement over the incumbent; in the full-grid run, Gen 3 emerged at
 generation 3, slot 0, after generations 1 and 2 each produced offspring
 that failed to beat the seeded Gen 2 champion. The diversify prompt
@@ -102,10 +102,10 @@ across the sixteen generations of full-grid evolution where diversify
 directly produced a winning candidate.
 
 The second observation concerns the content of what Gen 3 produced. The
-diversify prompt (§3.6, Appendix B) explicitly names five candidate
+diversify prompt (Section 3.6, Appendix B) explicitly names five candidate
 strategy families the LLM may draw from: lexicographic ordering,
 cluster-then-order, greedy nearest-in-time, reverse-order construction,
-and pair-tightness ordering. Gen 3's three mode branches (§4.6) implement,
+and pair-tightness ordering. Gen 3's three mode branches (Section 4.6) implement,
 respectively: cluster-then-lexicographic sorting (matching two of the
 five prompted families simultaneously — cluster-then-order and
 lexicographic); reverse-deadline lexicographic construction (matching
@@ -150,18 +150,18 @@ open rather than to pick a preferred narrative.
 **Explanation 1: The (1+λ = 2) evolutionary strategy is too narrow.** With
 only two offspring per generation and strict elitism, the loop's search
 is aggressive on exploitation and thin on exploration; the diversify
-prompt (§3.6) is the only structural exploration mechanism, and it fires
+prompt (Section 3.6) is the only structural exploration mechanism, and it fires
 only after two-generation stagnation. FunSearch (Romera-Paredes et al.,
 2024) samples on the order of millions of candidates across parallel
 islands, and EoH (Liu et al., 2024) uses populations an order of
 magnitude larger than two. The plateau may reflect a search-budget
 insufficiency rather than a mechanism failure. This dissertation cannot
 directly distinguish this from the alternatives below, because the
-Gemini free-tier quota (§3.7) precludes running with larger λ across
+Gemini free-tier quota (Section 3.7) precludes running with larger λ across
 enough generations to test the hypothesis meaningfully.
 
 **Explanation 2: The `gemini-3.6-flash` model has reached a capability
-ceiling on this problem.** The prompt cascade (§3.6) provides increasingly
+ceiling on this problem.** The prompt cascade (Section 3.6) provides increasingly
 targeted guidance across seed, evolve, and diversify variants, yet the
 extension session's diversify candidates in generations 9–16 produced
 neither Gen-3-level fitness nor structural approaches beyond what
@@ -170,7 +170,7 @@ for insertion-scoring functions on the PDPTW-SE is bounded by the model's
 pretraining exposure to relevant algorithmic literature, the plateau may
 reflect that bound. Testing this requires running the pipeline with a
 higher-capability model on the same problem, which was outside this
-dissertation's scope (§3.7).
+dissertation's scope (Section 3.7).
 
 **Explanation 3: The `--mslpa = 10` evaluation harness masks the
 discriminative signal.** Section 3.4 justified the choice of ten restarts
@@ -224,13 +224,13 @@ baseline rules and the three LLM-evolved champions — impose a
 deterministic-plus-perturbation ordering on the pickup requests before
 the semi-greedy insertion phase begins. `random`, by contrast, imposes no
 prior structure at all, leaving the semi-greedy insertion's own
-α-controlled restricted-candidate-list selection (§3.2) to construct the
+α-controlled restricted-candidate-list selection (Section 3.2) to construct the
 ordering implicitly through its per-restart choices. If `lr102-10R` has
 structural features that make any prior ordering worse in expectation
 than a purely random one — for instance, if its request geometry is such
 that adjacent-in-ordering requests tend to have incompatible time
 windows, so imposed orderings systematically produce insertion sequences
-the LP-improvement phase (§3.2) cannot recover from — then the failure
+the LP-improvement phase (Section 3.2) cannot recover from — then the failure
 mode is intrinsic to the family of insertion-order-based heuristics, not
 to the specific orderings within it. The LLM did not fail to find a
 better ordering on `lr102-10R`; there may not be one to find, within the
@@ -275,7 +275,7 @@ constraints, machine-synchronisation edges, and a mixed-region topology
 — under a fitness signal that is continuous rather than binary and an
 evaluator that is itself stochastic. That the mechanism produces
 monotonically improving grid fitness across three generations and a
-structurally novel mixture-of-strategies champion (§4.6, §5.3) is
+structurally novel mixture-of-strategies champion (Section 4.6, Section 5.3) is
 evidence that the FunSearch paradigm extends beyond the compact-program
 settings in which it was first demonstrated. The confirmation is modest 
 because the compute scale here — sixteen generations, thirty-two candidates, 
@@ -295,8 +295,8 @@ The present work reduced EoH's four-prompt taxonomy to three
 after sixteen generations that EoH's larger populations might have
 escaped. Whether the plateau is attributable to population size,
 prompt-cascade coarseness, model capability, or evaluation-harness
-saturation is exactly the ambiguity §5.4 refuses to resolve. What the
-present work adds is a specific observation §5.3 already developed: the
+saturation is exactly the ambiguity Section 5.4 refuses to resolve. What the
+present work adds is a specific observation Section 5.3 already developed: the
 diversify prompt's family menu was, in the Gen 3 case, treated by the
 LLM as a compositional palette rather than a selection list — three of
 the five named families appeared as branches of a single mixture
@@ -308,13 +308,13 @@ Against ReEvo, the present work does not implement the reflection
 mechanism that ReEvo introduced — a separate "reflector" LLM that
 compares parent heuristics in natural language and distils long-term
 design hints — and its absence is the most direct account of what the
-present pipeline lacks. The diversify prompt (§3.6) provides a form of
+present pipeline lacks. The diversify prompt (Section 3.6) provides a form of
 structured exploration relaunch but does not accumulate long-horizon
 reasoning across generations; the loop's memory extends only to the
 current champion and its immediate fitness. A ReEvo-style reflection
 layer, added between the champion display and the offspring generation
 step, would be a natural extension and might address the plateau
-Explanation 1 of §5.4 identifies. Beyond the missing reflection layer,
+Explanation 1 of Section 5.4 identifies. Beyond the missing reflection layer,
 this dissertation is bounded by four honest limitations: it evaluates
 only one LLM (`gemini-3.6-flash`), on one problem (PDPTW-SE, and only
 its multi-island Type 1 instances of ≤ 10 requests), at one restart

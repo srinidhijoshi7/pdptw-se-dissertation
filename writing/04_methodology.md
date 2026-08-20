@@ -4,8 +4,6 @@
 
 ## 3.1 Problem statement and evaluation setup
 
-### 3.1 Problem statement and evaluation setup
-
 Chapter 2 established that the pickup and delivery problem with time windows
 and scheduling on the edges (PDPTW-SE) is a computationally challenging
 integrated routing–scheduling problem for which a state-of-the-art
@@ -13,7 +11,7 @@ multi-start heuristic exists (Barbosa, Tiwari and Melo, 2026), and that a
 recent line of work in large-language-model-driven algorithm discovery has
 begun to yield heuristic components that match or exceed hand-designed
 counterparts in adjacent combinatorial-optimisation settings. The research
-questions posed in §2.7 ask whether that line of work can be extended to a
+questions posed in Section 2.7 ask whether that line of work can be extended to a
 research-grade heuristic for the PDPTW-SE — specifically, whether an LLM
 embedded in an evolutionary loop can discover insertion-scoring functions
 that improve on the two hand-designed baselines within the Multi-Start
@@ -39,7 +37,7 @@ requirements for the study.
 Chapter 4 then applies this pipeline to produce the three-champion
 progression, the multi-seed variance analysis, and the per-instance
 comparison against baselines that constitute the empirical answer to the
-research questions posed in §2.7.
+research questions posed in Section 2.7.
 
 ## 3.2 The MSLP baseline (Barbosa, Tiwari and Melo, 2026)
 
@@ -66,7 +64,7 @@ best insertion cost, and selects one at random (their
 `CHOOSE_CANDIDATE_BY_QUALITY` procedure). Tiwari's Julia implementation
 exposes both service-order rules as configurable options through a shared
 dispatcher, `get_service_order`; this dispatcher is the surface this
-dissertation modifies (§3.3).
+dissertation modifies (Section 3.3).
 
 After each feasible construction, MSLP invokes an LP-based schedule
 improvement procedure, `LP_SCHEDULE` (Algorithm 1, lines 5 and 9). Taking the
@@ -85,7 +83,7 @@ criterion is 60,000 iterations or 3,600 seconds per instance, and α is fixed
 at 0.05 following the preliminary tuning reported in their Appendix I. This
 dissertation retains α at 0.05 but departs on the restart budget, exposing the
 iteration count through the `--mslpa` flag in Tiwari's Julia implementation
-and fixing it at 10; the rationale is developed in §3.4.
+and fixing it at 10; the rationale is developed in Section 3.4.
 
 ## 3.3 The injection point: `get_service_order`
 
@@ -94,7 +92,7 @@ centralised in a single dispatcher function,
 `get_service_order(inst::InstanceData, params::ParameterData)::Vector{Int64}`,
 defined in `src/julia/modules/Multistart/src/heuristic/init_solution.jl`. The
 function returns the ordered list of pickup-node indices to be inserted in the
-current construction pass. Both rules described in §3.2 (`random` and
+current construction pass. Both rules described in Section 3.2 (`random` and
 `tightest_tw`, following Barbosa et al., 2026) are implemented as branches
 inside this dispatcher and selected at runtime through the
 `--greedy_service_order` command-line flag. The dispatcher is the sole point
@@ -105,7 +103,7 @@ companion function `llm_candidate_order` defined in the same file. It reads a
 Julia source file whose path is supplied through the environment variable
 `LLM_CANDIDATE_FILE`, includes its contents into the Multistart module's
 namespace, and invokes the loaded function on the current `InstanceData` and
-`ParameterData`. The Python evolution driver described in §3.5 writes each
+`ParameterData`. The Python evolution driver described in Section 3.5 writes each
 generated candidate to that path before launching Julia, so a single
 command-line invocation always evaluates the current candidate. A module-level
 cache keyed on file path avoids redundant re-inclusion across MSLP restarts
@@ -132,9 +130,9 @@ wrapper introduces no deviation from the baseline execution path. This test
 is checked into the repository as `src/julia/test_injection.sh` and is re-run
 whenever the injection code is modified.
 
-### 3.4 The evaluation harness
+## 3.4 The evaluation harness
 
-Every candidate produced by the evolutionary loop (§3.5) is scored by a single
+Every candidate produced by the evolutionary loop (Section 3.5) is scored by a single
 scalar **fitness**, computed by installing the candidate as the `llm_candidate`
 branch of `get_service_order`, running MSLP on a fixed grid of six benchmark
 instances, and averaging the per-instance ratios of candidate cost to a
@@ -159,7 +157,7 @@ denominator seed. Baseline costs are computed once per instance per seed and
 cached in `baselines.json`, then reused across all subsequent candidate
 evaluations.
 
-During evolution (§3.5), fitness is evaluated at a single seed (17) for
+During evolution (Section 3.5), fitness is evaluated at a single seed (17) for
 tractability, since each generation requires λ candidate evaluations and
 Gemini free-tier quota is capped at 20 calls per day. After the evolutionary
 loop terminates, the resulting champions are re-evaluated on a wider seed
@@ -177,7 +175,7 @@ complementing the short-horizon `lr1xx` cases to probe time-window tightness.
 Six instances yield a per-candidate wall-time near one minute at the
 parameters set out below, keeping the evolutionary loop tractable within the
 Gemini free-tier quota. Multi-floor instances and larger request counts are
-deferred as stretch scope (§3.5, §5).
+deferred as stretch scope (Section 3.5, Section 5).
 
 Every MSLP invocation runs with `--mslpa 10` (ten restarts), `--alpha 0.05`
 (the value tuned by Barbosa et al., 2026), `--max_time 60`, and `--threads 1`
@@ -200,7 +198,7 @@ sense of Rechenberg (1973), applied here to LLM-generated Julia functions in
 the paradigm of LLM-driven code discovery introduced by FunSearch
 (Romera-Paredes et al., 2024): a single incumbent champion is maintained
 throughout the run; each generation produces λ offspring by prompting an LLM;
-every offspring is scored by the fitness harness of §3.4; and the best
+every offspring is scored by the fitness harness of Section 3.4; and the best
 offspring replaces the incumbent if and only if it strictly improves on its
 fitness. The offspring count is fixed at λ = 2. This is a quota-driven rather
 than a principled choice: at Gemini's free-tier ceiling of twenty API calls
@@ -209,7 +207,7 @@ larger λ would exhaust the quota inside three or four generations, foreclosing
 the trajectory.
 
 Generation zero is initialised in one of two ways. The default path issues a
-seed prompt (§3.6) that asks the LLM to synthesise a candidate scoring
+seed prompt (Section 3.6) that asks the LLM to synthesise a candidate scoring
 function from scratch, given only a description of the problem and the Julia
 interface contract; the resulting candidate is evaluated and becomes the
 generation-zero champion. The alternative path loads a champion-seed file,
@@ -227,7 +225,7 @@ that identical-fitness offspring are logged but not promoted. A stagnation
 counter increments in every generation that fails to improve the champion and
 resets on any generation that does. When the counter reaches
 `STAGNATION_THRESHOLD = 2`, the next generation switches from the standard
-evolve prompt to a diversify prompt (§3.6) that asks the LLM for a
+evolve prompt to a diversify prompt (Section 3.6) that asks the LLM for a
 structurally different candidate rather than a local refinement of the
 incumbent. The counter continues to accumulate across diversify firings, so
 repeated stagnation triggers repeated diversification until the champion is
@@ -245,7 +243,7 @@ per-instance and mean fitness; `generations.jsonl` records the
 champion-of-generation trajectory. Both are committed to the repository at run
 end, giving a complete replayable record of every candidate the loop produced.
 
-### 3.6 Prompt cascade: seed, evolve, diversify
+## 3.6 Prompt cascade: seed, evolve, diversify
 
 The evolutionary loop uses three distinct prompt templates, each addressing a
 different role in the search: **seed** generates a candidate from scratch at
@@ -261,7 +259,7 @@ stagnation-triggered exploration relaunch. The full templates are provided in
 Appendix B.
 
 The seed prompt fires only at generation zero, and only when no champion-seed
-file is present (§3.5). It contains a natural-language description of the
+file is present (Section 3.5). It contains a natural-language description of the
 PDPTW-SE, a functional specification of the required Julia function (name,
 argument types, return type), a summary of the `random` and `tightest_tw`
 baseline rules as reference points, a documented layout of the `InstanceData`
@@ -304,7 +302,7 @@ interpretation of this outcome is deferred to Chapter 5.
 Candidate generation uses Google's `gemini-3.6-flash` model, accessed through
 the official `google-genai` Python SDK (version 2.16.0). The choice is
 deliberate: the free-tier quota (twenty requests per day) is sufficient for
-the (1+λ = 2) evolutionary budget described in §3.5, and preliminary tests on
+the (1+λ = 2) evolutionary budget described in Section 3.5, and preliminary tests on
 the lighter-weight `gemini-3.6-flash-lite` model found it inadequate — its
 candidates violated the Julia interface contract in the majority of
 generations, whereas `gemini-3.6-flash` produced compilable candidates on
@@ -320,7 +318,7 @@ repeated calls to the API do not return bit-identical completions, so the
 evolutionary trajectory reported in Chapter 4 is one realisation of a
 stochastic process rather than a deterministic sequence. This is a first-class
 methodological limitation and is treated as such in Chapter 5. In contrast,
-the *evaluation* half of the pipeline (§3.4) is deterministic: fixing the
+the *evaluation* half of the pipeline (Section 3.4) is deterministic: fixing the
 random seed, MSLP restart budget, and injected candidate produces bit-identical
 costs across repeated Julia invocations on the same machine.
 
@@ -350,12 +348,10 @@ at the repository root. This reproduction has been verified cross-machine.
 
 ## 3.8 Ethical considerations
  
- ### 3.8 Ethical considerations
-
 This dissertation is a computational study using publicly available secondary
 data; it involves no human participants, no primary data collection, no
 personally identifying information, and no commercially sensitive data. The
-benchmark instances used throughout (§3.4) derive from the pickup and
+benchmark instances used throughout (Section 3.4) derive from the pickup and
 delivery problem instances of Li and Lim (2001), which are themselves
 constructed from Solomon's (1987) vehicle-routing benchmarks by paired
 sampling; the PDPTW-SE adaptation used here is the multi-island (Type 1)
@@ -375,7 +371,7 @@ framing under which the application was granted. The original ethics approval
 form and the supervisor's written confirmation are included in Appendix A.
 
 The dissertation uses a large language model (Google `gemini-3.6-flash`,
-§3.7) as a generator of candidate scoring functions inside the evolutionary
+Section 3.7) as a generator of candidate scoring functions inside the evolutionary
 loop. All LLM-generated code was inspected before evaluation and is
 committed to the repository as an auditable record of every candidate the
 model produced. No LLM-generated content appears in the dissertation prose
