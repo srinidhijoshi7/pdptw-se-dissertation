@@ -87,6 +87,17 @@ and fixing it at 10; the rationale is developed in Section 3.4.
 
 ## 3.3 The injection point: `get_service_order`
 
+Figure 3.1 shows the pipeline's overall architecture: a Python driver
+generates prompts (Section 3.6), receives candidate Julia functions from
+the Gemini API (Section 3.7), writes each candidate to a shared file,
+launches Julia MSLP (Section 3.2) with an environment-variable pointer
+to that file, and computes a fitness ratio (Section 3.4) from the
+returned cost to decide whether to promote the candidate to champion.
+This section describes the injection mechanism at the code level; the
+driver, prompts, and fitness harness are the subjects of Sections 3.4–3.7.
+
+![**Figure 3.1.** Pipeline architecture: end-to-end flow from prompt generation to fitness scoring. The LLM generation side (blue) produces a candidate Julia function; the evaluation side (amber) runs it inside MSLP and returns a fitness ratio; solid arrows show the main data flow; the dashed arrow indicates side-effect persistence of every candidate and generation record.](figures/fig3_1_pipeline_architecture.png)
+
 In Tiwari's Julia implementation of MSLP, the choice of service-order rule is
 centralised in a single dispatcher function,
 `get_service_order(inst::InstanceData, params::ParameterData)::Vector{Int64}`,
