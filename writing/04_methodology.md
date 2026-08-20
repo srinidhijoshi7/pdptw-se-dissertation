@@ -1,7 +1,4 @@
 # Chapter 3 — Research Methodology
-
-*[Target: ~2500–3500 words.]*
-
 ## 3.1 Problem statement and evaluation setup
 
 Chapter 2 established that the pickup and delivery problem with time windows
@@ -327,8 +324,7 @@ top-k overrides are applied, and no system prompt is used. Reproducibility of
 LLM outputs is deliberately not assumed: even with fixed sampling parameters,
 repeated calls to the API do not return bit-identical completions, so the
 evolutionary trajectory reported in Chapter 4 is one realisation of a
-stochastic process rather than a deterministic sequence. This is a first-class
-methodological limitation and is treated as such in Chapter 5. In contrast,
+stochastic process rather than a deterministic sequence. This is a substantive methodological limitation and is treated as such in Chapter 5. In contrast,
 the *evaluation* half of the pipeline (Section 3.4) is deterministic: fixing the
 random seed, MSLP restart budget, and injected candidate produces bit-identical
 costs across repeated Julia invocations on the same machine.
@@ -385,5 +381,4 @@ The dissertation uses a large language model (Google `gemini-3.6-flash`,
 Section 3.7) as a generator of candidate scoring functions inside the evolutionary
 loop. All LLM-generated code was inspected before evaluation and is
 committed to the repository as an auditable record of every candidate the
-model produced. No LLM-generated content appears in the dissertation prose
-itself; all writing is the author's own.
+model produced. Claude (Anthropic) was used as an editorial assistant to review and refine paragraphs drafted by the author; all substantive drafting, argumentation, and analysis are the author's own. No AI-generated prose appears in the dissertation without author review, revision, and inclusion decision.
