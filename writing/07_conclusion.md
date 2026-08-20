@@ -55,6 +55,33 @@ architectural extension.
 
 ## 6.2 Answers to the research questions
 
+The dissertation's three sub-questions admit the following compact
+answers, developed in full in Section 5.2.
 
+**RQ1 (baseline comparison).** LLM-evolved candidates decisively
+outperform the `tightest_tw` baseline; they partially outperform the
+`random` baseline. All three champions produce a lower multi-seed mean
+grid ratio than `tightest_tw` (1.0130), with the third champion at
+1.0024. No champion produces a mean ratio strictly below 1.000 across
+the five-seed evaluation, so none beats `random` on average across the
+grid; the seed-17 result reported in Section 4.3 is a favourable slice
+rather than the seed-averaged verdict.
+
+**RQ2 (seed generalisation).** Improvements are real but
+instance-specific rather than uniform. The third champion beats
+`random` on `lr103-6R` across all five evaluation seeds and on
+`lr201-6R` in mean, while `lr101-10R` exhibits large per-seed variance
+irrespective of the candidate used, and `lr102-10R` remains a
+negative case for every non-`random` configuration tested.
+
+**RQ3 (structural characteristics).** The three champions exhibit
+three qualitatively different construction paradigms — parallel
+weighted-sum scoring, sequential greedy chain construction, and a
+uniformly-selected mixture of three strategies. The strongest of the
+three is the one that abandoned single-strategy commitment for a
+probabilistic mixture, produced by the diversify prompt after two
+consecutive stagnation generations. The mixture-of-strategies
+architecture was the LLM's own initiative rather than the prompt's
+instruction.
 
 ## 6.3 Future work
