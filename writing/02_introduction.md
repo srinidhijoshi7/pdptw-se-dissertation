@@ -93,4 +93,50 @@ the paradigm.
 
 ## 1.3 Contributions
 
+The remainder of this dissertation is organised into six chapters.
+
+Chapter 2 reviews the two literatures at whose intersection this
+dissertation sits: the long-established body of work on the pickup and
+delivery problem with time windows and its variants — including the
+PDPTW-SE — and the recent literature on LLM-driven evolutionary
+program search for algorithm discovery. The chapter closes by
+identifying the specific gap this dissertation fills and by mapping
+that gap onto the injection point the pipeline targets.
+
+Chapter 3 describes the experimental pipeline in full. It sets out the
+Multi-Start LP-Improvement heuristic that serves as the base method,
+the technical mechanism by which LLM-generated candidates are injected
+into it at runtime, the fitness harness and evaluation grid, the (1+λ)
+evolutionary loop that drives generation, the three-prompt cascade
+that varies the LLM's role across the search, and the model
+configuration and reproducibility artefacts that make the results
+replayable.
+
+Chapter 4 reports the empirical findings. It presents the three
+champions the pipeline produced, their comparison against the two
+hand-designed baselines at a fixed evaluation seed and across a wider
+seed grid, per-instance analysis of the two most methodologically
+significant anomalies (a breakthrough instance and a persistent
+negative one), a structural characterisation of the three champion
+Julia functions, and a plateau-confirmation extension in which a
+second evolutionary session produced no further improvement.
+
+Chapter 5 interprets those findings against the research questions
+posed in Chapter 2 and against the three foundational works of
+LLM-driven algorithm discovery reviewed there. It delivers the direct
+answers to the sub-questions, develops the methodological finding
+about the diversify prompt's role in producing the third champion,
+treats the observed plateau as four candidate explanations rather
+than one, argues that the persistent negative on a specific instance
+reflects a limitation of the family of insertion-order-based methods
+rather than of the pipeline specifically, and states explicitly what
+this work confirms, complicates, and lacks relative to prior work in
+the field.
+
+Chapter 6 summarises the contributions, restates the answers to the
+research questions in compact form, and identifies the concrete
+extension experiments that would relax the limitations named in
+Chapter 5. An abstract, ethics documentation, prompt templates, and
+champion source code are provided in appendices.
+
 ## 1.4 Dissertation structure
