@@ -55,7 +55,7 @@ uniform per-instance improvement, but they do generalise in specific
 per-instance ways that matter methodologically. Gen 3 beats `random` on
 `lr103-6R` across all five seeds (mean 0.9943 ± 0.0121) and on `lr201-6R`
 in mean (0.9960 ± 0.0089) — two of the six instances on which the
-seed-averaged behaviour is genuinely improved. On `lr101-10R`, all
+seed-averaged behaviour is improved. On `lr101-10R`, all
 candidates including `tightest_tw` exhibit large per-seed variance
 (standard deviations 0.05–0.10), with individual ratios ranging from
 0.9005 to 1.1095, suggesting that MSLP at `--mslpa = 10` on this instance
@@ -74,7 +74,7 @@ uniformly-selected mixture of three distinct strategies (Section 4.6). Two
 observations about this progression carry interpretive weight for the
 mechanism of LLM-driven heuristic evolution. First, each new champion
 was structurally distinct from its parent — the LLM did not converge on a
-single algorithmic family and refine it, but produced meaningfully
+single algorithmic family and refine it, but produced structurally
 different families in successive generations. Second, the strongest
 champion of the three (Gen 3, on both single-seed grid fitness and
 multi-seed mean) was the one that abandoned single-strategy commitment in
@@ -158,7 +158,7 @@ magnitude larger than two. The plateau may reflect a search-budget
 insufficiency rather than a mechanism failure. This dissertation cannot
 directly distinguish this from the alternatives below, because the
 Gemini free-tier quota (Section 3.7) precludes running with larger λ across
-enough generations to test the hypothesis meaningfully.
+enough generations to test the hypothesis adequately.
 
 **Explanation 2: The `gemini-3.6-flash` model has reached a capability
 ceiling on this problem.** The prompt cascade (Section 3.6) provides increasingly
