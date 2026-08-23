@@ -52,8 +52,6 @@ ax.text(len(INSTANCES) - 0.5, 1.0, "  parity with random",
 
 ax.set_xlabel("Instance", fontsize=11)
 ax.set_ylabel("Mean ratio to same-seed random baseline (± 1 std, n=5)", fontsize=11)
-ax.set_title("Figure 4.2  Per-instance multi-seed mean ratios for the three champions",
-             fontsize=11, loc="left")
 ax.set_xticks(x)
 ax.set_xticklabels(INSTANCES)
 ax.legend(loc="upper left", fontsize=10, framealpha=0.9)

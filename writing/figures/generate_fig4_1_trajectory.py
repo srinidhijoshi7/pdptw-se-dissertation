@@ -100,8 +100,6 @@ ax.text(12.5, label_y, "Session 2 (gens 9–16, extension)",
 
 ax.set_xlabel("Generation", fontsize=11)
 ax.set_ylabel("Best-of-generation fitness (mean ratio to random)", fontsize=11)
-ax.set_title("Figure 4.1  Fitness trajectory across sixteen generations of full-grid evolution",
-             fontsize=11, loc="left")
 ax.set_xticks(range(1, 17))
 ax.legend(loc="lower right", fontsize=9, framealpha=0.9)
 ax.grid(True, alpha=0.3)
