@@ -1,27 +1,29 @@
 cff-version: 1.2.0
-message: "If you use this code, please cite the associated paper."
-title: "pdptw-se"
-authors:
-  - family-names: "Barbosa"
-    given-names: "Vítor A."
-repository-code: "https://github.com/ab-vitor/pdptw-se"
+message: "If you use this software, please cite it as below, and also cite the base MSLP paper listed under references."
+title: "LLM-Driven Insertion-Scoring Heuristics for the PDPTW-SE"
+abstract: "A FunSearch-style evolutionary pipeline using a large language model to discover insertion-scoring heuristics inside the Multi-Start LP-Improvement heuristic for the Pickup and Delivery Problem with Time Windows and Scheduling on the Edges."
 type: software
-version: "0.1.0"
-date-released: 2026-01-25
-preferred-citation:
-  type: article
-  title: "The pickup and delivery problem with time windows and scheduling on the edges"
-  authors:
-    - family-names: "Barbosa"
-      given-names: "Vítor A."
-      affiliation: "Institute of Computing, Universidade Federal da Bahia, Salvador, BA 40170-115, Brazil"
-    - family-names: "Tiwari"
-      given-names: "Sunil"
-      affiliation: "Technology & Operations Group, University of Bristol Business School, Bristol, United Kingdom"
-    - family-names: "Melo"
-      given-names: "Rafael A."
-      affiliation: "Institute of Computing, Universidade Federal da Bahia, Salvador, BA 40170-115, Brazil"
-  journal: "European Journal of Operational Research"
-  year: 2026
-  doi: "10.1016/j.ejor.2026.01.036"
-  status: "pre-proof"
+authors:
+  - family-names: Joshi
+    given-names: "Srinidhi Narasimha"
+    affiliation: "University of Bristol Business School"
+  - family-names: Tiwari
+    given-names: Sunil
+    affiliation: "University of Bristol Business School"
+version: "1.0.0"
+date-released: "2026-09-04"
+url: "https://github.com/srinidhijoshi7/pdptw-se-dissertation"
+license: MIT
+references:
+  - type: article
+    title: "The pickup and delivery problem with time windows and scheduling on the edges"
+    authors:
+      - family-names: Barbosa
+        given-names: "Vitor A."
+      - family-names: Tiwari
+        given-names: Sunil
+      - family-names: Melo
+        given-names: "Rafael A."
+    journal: "European Journal of Operational Research"
+    year: 2026
+    doi: "10.1016/j.ejor.2026.01.036"
