@@ -1,7 +1,5 @@
 # Dissertation code handoff — Srinidhi Joshi
 
-Dear Sunil,
-
 This is the code for my MSc dissertation, which extends your MSLP heuristic
 with LLM-generated `get_service_order` candidates. The instructions below
 let you reproduce the central Chapter 4 result — the three-champion
