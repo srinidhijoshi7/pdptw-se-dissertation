@@ -26,3 +26,9 @@ src/python/llm_loop/logs/*.jsonl
 
 # macOS
 .DS_Store
+
+# Dissertation source and build output (kept local)
+writing/
+
+# Dissertation source and build output (kept local)
+writing/
